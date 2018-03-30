@@ -90,8 +90,15 @@ private:
     QOpenGLShaderProgram program;
     GeometryEngine *geometries;
     Cube *head;
+    Cube *body;
+    Cube *leftArm;
+    Cube *rightArm;
+    Cube *leftLeg;
+    Cube *rightLeg;
+
 
     QMatrix4x4 projection;
+    QMatrix4x4 view;
 
     QVector2D mousePressPosition;
     QVector3D rotationAxis;

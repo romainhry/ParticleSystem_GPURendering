@@ -49,28 +49,25 @@
 ****************************************************************************/
 
 #include "cube.h"
+#include "vertexdata.h"
 
 #include <QVector2D>
 #include <QVector3D>
 
 
-struct VertexData
-{
-    QVector3D position;
-    QVector3D color;
-};
+
 
 
 //! [0]
-Cube::Cube(float pWidth_fl,float pLength_fl,float pDepth_fl, QVector3D pPosition_v3)
+Cube::Cube(float pWidth_fl,float pLength_fl,float pDepth_fl, QVector3D pColor_v3)
     : index1Buf(QOpenGLBuffer::IndexBuffer), index2Buf(QOpenGLBuffer::IndexBuffer)
 {
     initializeOpenGLFunctions();
 
-    this->width = pWidth_fl;
-    this->length = pLength_fl;
-    this->depth = pDepth_fl;
-    this->position = pPosition_v3;
+    this->width = pWidth_fl/2.0;
+    this->length = pLength_fl/2.0;
+    this->depth = pDepth_fl/2.0;
+    color = pColor_v3;
 
 
     // Generate 3 VBOs
@@ -92,28 +89,28 @@ Cube::~Cube()
 
 void Cube::initGeometry()
 {
-    static const VertexData vertices[] = {
-        {QVector3D(0.0f, 0.0f, 0.0f), QVector3D(2.0f, 0.0f,0.0f)}, // V0
-        {QVector3D(width, 0.0f, 0.0f), QVector3D(2.0f, 0.0f,0.0f)}, // V1
-        {QVector3D(0.0f, length, 0.0f), QVector3D(2.0f, 0.0f,0.0f)}, // V2
-        {QVector3D(0.0f, 0.0f, depth), QVector3D(2.0f, 0.0f,0.0f)}, // V3
-        {QVector3D(width, length, 0.0f), QVector3D(2.0f, 0.0f,0.0f)}, // V4
-        {QVector3D(width, 0.0f, depth), QVector3D(2.0f, 0.0f,0.0f)}, // V5
-        {QVector3D(0.0f, length, depth), QVector3D(2.0f, 0.0f,0.0f)}, // V6
-        {QVector3D(width, length, depth), QVector3D(2.0f, 0.0f,0.0f)}  // V7
+    VertexData vertices[] = {
+        {QVector3D(-width, -length, -depth),    color}, // V0
+        {QVector3D(width, -length, -depth),   color}, // V1
+        {QVector3D(-width, length, -depth),  color}, // V2
+        {QVector3D(-width, -length, depth),   color}, // V3
+        {QVector3D(width, length, -depth), color}, // V4
+        {QVector3D(width, -length, depth),  color}, // V5
+        {QVector3D(-width, length, depth), color}, // V6
+        {QVector3D(width, length, depth),color}  // V7
     };
 
-    static const int nbrVertices = 8;
+    int nbrVertices = 8;
 
-    static const GLushort indices1[] = {
+    GLushort indices1[] = {
         0,1,4,2,6,3,5,1
     };
 
-    static const GLushort indices2[] = {
+    GLushort indices2[] = {
         7,6,3,5,1,4,2,6
     };
 
-    static const int nbrIndices = 8;
+    int nbrIndices = 8;
 
     // Transfer vertex data to VBO 0
     arrayBuf.bind();

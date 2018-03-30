@@ -12,7 +12,8 @@ SOURCES += \
 HEADERS += \
     src/mainwidget.h \
     src/geometryengine.h \
-    src/cube.h
+    src/cube.h \
+    src/vertexdata.h
 
 RESOURCES += \
     ressources/shaders.qrc \

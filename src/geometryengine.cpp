@@ -49,16 +49,11 @@
 ****************************************************************************/
 
 #include "geometryengine.h"
+#include "vertexdata.h"
+
 
 #include <QVector2D>
 #include <QVector3D>
-
-
-struct VertexData
-{
-    QVector3D position;
-    QVector3D color;
-};
 
 
 VertexData vertices[] = {

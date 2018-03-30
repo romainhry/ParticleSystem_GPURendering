@@ -58,7 +58,7 @@
 class Cube : protected QOpenGLFunctions
 {
 public:
-    Cube(float width,float length,float depth, QVector3D position);
+    Cube(float pWidth_fl,float pLength_fl,float pDepth_fl, QVector3D pColor_v3);
     virtual ~Cube();
 
     void drawGeometry(QOpenGLShaderProgram *program);
@@ -69,6 +69,8 @@ private:
     float width;
     float length;
     float depth;
+    QVector3D color;
+
     QVector3D position;
 
     QOpenGLBuffer arrayBuf;

@@ -58,8 +58,16 @@ MainWidget::MainWidget(QWidget *parent) :
     QOpenGLWidget(parent),
     geometries(0),
     angularSpeed(0),
-    head(0)
+    head(0),
+    body(0),
+    leftArm(0),
+    rightArm(0),
+    leftLeg(0),
+    rightLeg(0)
 {
+
+    setMinimumHeight(1000);
+    setMinimumWidth(1000);
 }
 
 MainWidget::~MainWidget()
@@ -127,16 +135,23 @@ void MainWidget::initializeGL()
 
     initShaders();
 
-//! [2]
     // Enable depth buffer
     glEnable(GL_DEPTH_TEST);
 
     // Enable back face culling
     glEnable(GL_CULL_FACE);
-//! [2]
+
 
     geometries = new GeometryEngine;
-    head = new Cube(2.0,2.0,2.0, {0,0,0});
+    head =       new Cube(2.0,2.0,2.0,    {116.0/255.0, 72.0/255.0, 55.0/255.0});
+
+    // Not optimized : you should instance only 1 cube, and change the model matrix
+    // this methode will instanciate 8 vbo * nb(vbo in cube) instead of nb(vbo in cube)
+    body =       new Cube(3.0,5.0,2.0,    {0,147.0/255.0,0});
+    leftArm =    new Cube(1.0,4.0,1.0,    {0,147.0/255.0,0});
+    rightArm =   new Cube(1.0,4.0,1.0,    {0,147.0/255.0,0});
+    leftLeg =    new Cube(1.0,5.0,1.0,    {0,0,147.0/255.0});
+    rightLeg =   new Cube(1.0,5.0,1.0,    {0,0,147.0/255.0});
 
     // Use QBasicTimer because its faster than QTimer
     timer.start(12, this);
@@ -164,19 +179,22 @@ void MainWidget::initShaders()
 //! [3]
 
 
-//! [5]
+// run each time the windows is resized
 void MainWidget::resizeGL(int w, int h)
 {
     // Calculate aspect ratio
     qreal aspect = qreal(w) / qreal(h ? h : 1);
 
     // Set near plane to 3.0, far plane to 7.0, field of view 45 degrees
-    const qreal zNear = 1.0, zFar = 25.0, fov = 45.0;
+    const qreal zNear = 0.1, zFar = 50.0, fov = 45.0;
+
+    // Set view matrix
+    view.setToIdentity();
+    view.translate({0,-10,-30});
 
     // Reset projection
     projection.setToIdentity();
-
-    // Set perspective projection
+    // Set perspective projection matrix
     projection.perspective(fov, aspect, zNear, zFar);
 }
 //! [5]
@@ -186,18 +204,47 @@ void MainWidget::paintGL()
     // Clear color 0nd depth buffer
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-//! [6]
-    // Calculate model view transformation
+    // Parent matrix model , in order to applicate the same transformation to all its childs
+    QMatrix4x4 humanoide;
+    humanoide.rotate(rotation);
+    humanoide = projection * view * humanoide;
+
+    // Calculate model matrix
     QMatrix4x4 matrix;
-    matrix.translate(0.0, 0.0, -15.0);
-    matrix.rotate(rotation);
-
-    // Set modelview-projection matrix
-    program.setUniformValue("mvp", projection * matrix);
-//! [6]
-
-    // Draw cube geometry
+    //Set modelview-projection matrix
+    program.setUniformValue("mvp", humanoide * matrix);
+    //Draw base geometry
     geometries->drawGeometry(&program);
+
+
+    QMatrix4x4 matrixHead;
+    matrixHead.translate(5.0, 10, 0);
+    program.setUniformValue("mvp", humanoide * matrixHead);
     head->drawGeometry(&program);
+
+    QMatrix4x4 matrixBody;
+    matrixBody.translate(5.0, 5.5, 0);
+    program.setUniformValue("mvp", humanoide * matrixBody);
+    body->drawGeometry(&program);
+
+    QMatrix4x4 matrixRightLeg;
+    matrixRightLeg.translate(6.0, 0.0, 0);
+    program.setUniformValue("mvp", humanoide * matrixRightLeg);
+    rightLeg->drawGeometry(&program);
+
+    QMatrix4x4 matrixLeftLeg;
+    matrixLeftLeg.translate(4.0, 0.0, 0);
+    program.setUniformValue("mvp", humanoide * matrixLeftLeg);
+    leftLeg->drawGeometry(&program);
+
+    QMatrix4x4 matrixRightArm;
+    matrixRightArm.translate(7.5, 5.5, 0);
+    program.setUniformValue("mvp", humanoide * matrixRightArm);
+    rightArm->drawGeometry(&program);
+
+    QMatrix4x4 matrixLeftArm;
+    matrixLeftArm.translate(2.5, 5.5, 0);
+    program.setUniformValue("mvp", humanoide * matrixLeftArm );
+    leftArm->drawGeometry(&program);
 
 }

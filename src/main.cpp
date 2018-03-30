@@ -62,12 +62,11 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
 
     QSurfaceFormat format;
-    //format.setVersion( 3, 3);
-    //format.setProfile( QSurfaceFormat::CoreProfile );
+
     QSurfaceFormat::setDefaultFormat(format);
 
-    app.setApplicationName("Template IN55");
-    app.setApplicationVersion("1.0");
+    app.setApplicationName("TP IN55");
+    app.setApplicationVersion("1.2");
 #ifndef QT_NO_OPENGL
     MainWidget widget;
     widget.show();
