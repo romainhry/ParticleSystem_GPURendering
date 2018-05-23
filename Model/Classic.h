@@ -18,7 +18,7 @@ public:
     /**
      * @param value
      */
-    void setM_color(QVector3D value);
+    void setM_color(QVector3D * value);
 private: 
     QVector3D m_color;
 };

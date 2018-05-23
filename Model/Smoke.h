@@ -11,15 +11,21 @@
 
 
 class Smoke: public Particle {
-public: 
-    
-    QVector3D getM_color();
-    
+public:
+
+    static QVector3D getM_color()
+    {
+        return m_color;
+    }
+
     /**
      * @param value
      */
-    void setM_color(QVector3D * value);
-private: 
+    static void setM_color(QVector3D * value)
+    {
+        m_color = * value;
+    }
+private:
     static QVector3D m_color;
 };
 

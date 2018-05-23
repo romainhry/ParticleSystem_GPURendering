@@ -21,6 +21,7 @@ QVector3D Classic::getM_color() {
 /**
  * @param value
  */
-void Classic::setM_color(QVector3D value) {
+void Classic::setM_color(QVector3D * value) {
 
+    m_color = * value;
 }
