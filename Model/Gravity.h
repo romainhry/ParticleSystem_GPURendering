@@ -13,14 +13,14 @@
 class Gravity: public Force {
 public: 
     
-    float getM_gravity_factor();
+    f32 getM_gravity_factor();
     
     /**
      * @param value
      */
     void setM_gravity_factor(f32 value);
 private: 
-    float m_gravity_factor;
+    f32 m_gravity_factor;
 };
 
 #endif //_GRAVITY_H

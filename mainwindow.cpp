@@ -1,16 +1,26 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <stdio.h>
+#include "renderwidget.h"
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    m_render = new RenderWidget(ui->horizontalLayoutWidget);
+
     ui->setupUi(this);
+    ui->horizontalLayout->addWidget(m_render);
+
+    /*ui->widget = &m_render;
+    ui->widget->show();*/
+    //setCentralWidget(m_render);
 }
+
 
 MainWindow::~MainWindow()
 {
+
     delete ui;
 }
 

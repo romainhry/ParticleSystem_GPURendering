@@ -46,12 +46,21 @@ public:
      * @param value
      */
     void setM_density(f32 value);
+
+    QVector3D getM_speed();
+
+    /**
+     * @param value
+     */
+    void setM_speed(QVector3D * value);
 protected: 
     QVector3D m_position;
+    QVector3D m_speed;
     u8 m_size;
     u16 m_lifeTime;
     u8 m_alpha;
     f32 m_density;
+
     
     ~Particle();
 };

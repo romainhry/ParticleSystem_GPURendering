@@ -34,7 +34,8 @@ SOURCES += main.cpp\
     Model/Smoke.cpp \
     Model/System.cpp \
     Model/Water.cpp \
-    Model/Wind.cpp
+    Model/Wind.cpp \
+    renderwidget.cpp
 
 HEADERS  += mainwindow.h \
     Model/Classic.h \
@@ -48,6 +49,7 @@ HEADERS  += mainwindow.h \
     Model/System.h \
     Model/Water.h \
     Model/Wind.h \
-    typedef.h
+    typedef.h \
+    renderwidget.h
 
 FORMS    += mainwindow.ui

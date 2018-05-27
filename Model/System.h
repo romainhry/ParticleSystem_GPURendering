@@ -7,6 +7,13 @@
 #define _SYSTEM_H
 
 #include "typedef.h"
+#include "Particle.h"
+#include "Gravity.h"
+#include "Wind.h"
+
+#ifndef NBPARTICLEMAX
+#define NBPARTICLEMAX 1000
+#endif
 
 class System {
 public: 
@@ -29,8 +36,12 @@ public:
      */
     void setM_particleNb(u16 value);
 private: 
-    float m_atmDensity;
+    f32 m_atmDensity;
     u16 m_particleNb;
+    Gravity m_gravity;
+    Wind m_wind;
+
+    Particle m_particleTab[NBPARTICLEMAX];
     
     void check_life_time();
     

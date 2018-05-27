@@ -81,5 +81,19 @@ void Particle::setM_density(f32 value) {
     m_density = value;
 }
 
+QVector3D Particle::getM_speed()
+{
+    return m_speed;
+}
+
+
+/**
+ * @param value
+ */
+void Particle::setM_speed(QVector3D * value)
+{
+    m_speed = * value;
+}
+
 Particle::~Particle() {
 }
