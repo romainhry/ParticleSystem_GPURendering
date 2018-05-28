@@ -35,6 +35,58 @@ SOURCES += main.cpp\
     Model/System.cpp \
     Model/Water.cpp \
     Model/Wind.cpp \
+    renderwidget.cpp \
+    Model/Classic.cpp \
+    Model/Fire.cpp \
+    Model/Gravity.cpp \
+    Model/Linear.cpp \
+    Model/Particle.cpp \
+    Model/Screw.cpp \
+    Model/Smoke.cpp \
+    Model/System.cpp \
+    Model/Water.cpp \
+    Model/Wind.cpp \
+    main.cpp \
+    mainwindow.cpp \
+    renderwidget.cpp \
+    Model/Classic.cpp \
+    Model/Fire.cpp \
+    Model/Gravity.cpp \
+    Model/Linear.cpp \
+    Model/Particle.cpp \
+    Model/Screw.cpp \
+    Model/Smoke.cpp \
+    Model/System.cpp \
+    Model/Water.cpp \
+    Model/Wind.cpp \
+    main.cpp \
+    mainwindow.cpp \
+    renderwidget.cpp \
+    Model/Classic.cpp \
+    Model/Fire.cpp \
+    Model/Gravity.cpp \
+    Model/Linear.cpp \
+    Model/Particle.cpp \
+    Model/Screw.cpp \
+    Model/Smoke.cpp \
+    Model/System.cpp \
+    Model/Water.cpp \
+    Model/Wind.cpp \
+    main.cpp \
+    mainwindow.cpp \
+    renderwidget.cpp \
+    Model/Classic.cpp \
+    Model/Fire.cpp \
+    Model/Gravity.cpp \
+    Model/Linear.cpp \
+    Model/Particle.cpp \
+    Model/Screw.cpp \
+    Model/Smoke.cpp \
+    Model/System.cpp \
+    Model/Water.cpp \
+    Model/Wind.cpp \
+    main.cpp \
+    mainwindow.cpp \
     renderwidget.cpp
 
 HEADERS  += mainwindow.h \
@@ -50,6 +102,78 @@ HEADERS  += mainwindow.h \
     Model/Water.h \
     Model/Wind.h \
     typedef.h \
-    renderwidget.h
+    renderwidget.h \
+    Model/Classic.h \
+    Model/Fire.h \
+    Model/Force.h \
+    Model/Gravity.h \
+    Model/Linear.h \
+    Model/Particle.h \
+    Model/Screw.h \
+    Model/Smoke.h \
+    Model/System.h \
+    Model/Water.h \
+    Model/Wind.h \
+    mainwindow.h \
+    renderwidget.h \
+    typedef.h \
+    Model/Classic.h \
+    Model/Fire.h \
+    Model/Force.h \
+    Model/Gravity.h \
+    Model/Linear.h \
+    Model/Particle.h \
+    Model/Screw.h \
+    Model/Smoke.h \
+    Model/System.h \
+    Model/Water.h \
+    Model/Wind.h \
+    mainwindow.h \
+    renderwidget.h \
+    typedef.h \
+    Model/Classic.h \
+    Model/Fire.h \
+    Model/Force.h \
+    Model/Gravity.h \
+    Model/Linear.h \
+    Model/Particle.h \
+    Model/Screw.h \
+    Model/Smoke.h \
+    Model/System.h \
+    Model/Water.h \
+    Model/Wind.h \
+    mainwindow.h \
+    renderwidget.h \
+    typedef.h \
+    Model/Classic.h \
+    Model/Fire.h \
+    Model/Force.h \
+    Model/Gravity.h \
+    Model/Linear.h \
+    Model/Particle.h \
+    Model/Screw.h \
+    Model/Smoke.h \
+    Model/System.h \
+    Model/Water.h \
+    Model/Wind.h \
+    mainwindow.h \
+    renderwidget.h \
+    typedef.h
 
 FORMS    += mainwindow.ui
+
+RESOURCES += \
+    ressources/shaders.qrc \
+    ressources/shaders.qrc \
+    ressources/shaders.qrc \
+    ressources/shaders.qrc
+
+DISTFILES += \
+    ressources/fshader.glsl \
+    ressources/vshader.glsl \
+    ressources/fshader.glsl \
+    ressources/vshader.glsl \
+    ressources/fshader.glsl \
+    ressources/vshader.glsl \
+    ressources/fshader.glsl \
+    ressources/vshader.glsl
