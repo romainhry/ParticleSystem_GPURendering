@@ -23,3 +23,8 @@ QVector3D Wind::getM_translation() {
 void Wind::setM_translation(QVector3D * value) {
     m_translation = * value;
 }
+
+QMatrix4x4 Wind::get_matrix()
+{
+
+}

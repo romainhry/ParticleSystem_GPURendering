@@ -24,3 +24,8 @@ void Gravity::setM_gravity_factor(f32 value) {
 
     m_gravity_factor = value;
 }
+
+QMatrix4x4 Gravity::get_matrix()
+{
+
+}

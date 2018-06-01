@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "renderwidget.h"
+#include "Model/System.h"
 
 namespace Ui {
 class MainWindow;
@@ -38,7 +39,8 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    RenderWidget * m_render;
+    RenderWidget m_render;
+    System m_system;
 };
 
 #endif // MAINWINDOW_H

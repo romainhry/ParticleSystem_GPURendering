@@ -19,6 +19,8 @@ public:
      * @param value
      */
     void setM_gravity_factor(f32 value);
+
+    QMatrix4x4 get_matrix();
 private: 
     f32 m_gravity_factor;
 };

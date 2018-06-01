@@ -11,7 +11,7 @@
 class Force {
 public: 
     
-    virtual QMatrix4x4 get_matrix();
+    virtual QMatrix4x4 get_matrix() = 0;
 };
 
 #endif //_FORCE_H

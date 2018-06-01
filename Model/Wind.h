@@ -18,6 +18,8 @@ public:
      * @param value
      */
     void setM_translation(QVector3D * value);
+
+     QMatrix4x4 get_matrix();
 protected: 
     QVector3D m_translation;
 };

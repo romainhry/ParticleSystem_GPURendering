@@ -35,11 +35,14 @@ public:
      * @param value
      */
     void setM_particleNb(u16 value);
+
+    Gravity m_gravity;
+    Wind m_wind;
+
 private: 
     f32 m_atmDensity;
     u16 m_particleNb;
-    Gravity m_gravity;
-    Wind m_wind;
+
 
     Particle m_particleTab[NBPARTICLEMAX];
     

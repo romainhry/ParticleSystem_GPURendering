@@ -94,7 +94,7 @@ void System::setM_particleNb(u16 value) {
 void System::check_life_time() {
 
     for(int i=0; i<NBPARTICLEMAX; i++){
-           if (m_particleTab[i].getM_lifeTime() < 0){
+           if (m_particleTab[i].getM_lifeTime() == 0){
 
            }
        }
