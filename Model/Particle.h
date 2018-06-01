@@ -12,11 +12,14 @@
 #include <QOpenGLShaderProgram>
 #include <QOpenGLBuffer>
 
-class Particle  : protected QOpenGLFunctions {
+
+class Particle {
 public: 
     
     Particle();
+    Particle(QVector3D * p, u8 s, u16 l,u8 a,f32 d);
     QVector3D getM_position();
+
 
     
     /**
@@ -59,6 +62,7 @@ public:
      */
     void setM_speed(QVector3D * value);
 
+
      ~Particle();
 protected: 
     QVector3D m_position;
@@ -68,8 +72,8 @@ protected:
     u8 m_alpha;
     f32 m_density;
 
-    QOpenGLBuffer arrayBuf;
-    QOpenGLBuffer indexBuf;
+private:
+
 
     
 

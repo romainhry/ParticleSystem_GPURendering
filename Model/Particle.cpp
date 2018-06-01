@@ -4,44 +4,22 @@
 
 
 #include "Particle.h"
+#include "typedef.h"
 #include <QOpenGLFunctions>
 #include <QOpenGLShaderProgram>
 #include <QOpenGLBuffer>
 
-// The VBO containing the 4 vertices of the particles.
-// Thanks to instancing, they will be shared by all particles.
-static const GLfloat s_vertices[] = {
- -0.5f, -0.5f, 0.0f,
- 0.5f, -0.5f, 0.0f,
- -0.5f, 0.5f, 0.0f,
- 0.5f, 0.5f, 0.0f,
-};
-
-static const GLushort s_indices[] = {
-    0,1,4,3
-};
-
-
 /**
  * Particle implementation
  */
-Particle::Particle()
+Particle::Particle(): m_position(), m_size(),m_lifeTime(),m_alpha(),m_density()
 {
-    /*
-    initializeOpenGLFunctions();
 
-    // Generate 2 VBOs
-    arrayBuf.create();
-    indexBuf.create();
+}
 
+Particle::Particle(QVector3D * p, u8 s, u16 l,u8 a,f32 d): m_position(*p), m_size(s),m_lifeTime(l),m_alpha(a),m_density(d)
+{
 
-    // Transfer vertex data to VBO 0
-    arrayBuf.bind();
-    arrayBuf.allocate(s_vertices, 4 * sizeof(GLfloat) * 4);
-
-    // Transfer index data to VBO 1
-    indexBuf.bind();
-    indexBuf.allocate(s_vertices, 4 * sizeof(GLushort));*/
 }
 
 
@@ -131,7 +109,4 @@ void Particle::setM_speed(QVector3D * value)
 }
 
 Particle::~Particle() {
-
-    arrayBuf.destroy();
-    indexBuf.destroy();
 }

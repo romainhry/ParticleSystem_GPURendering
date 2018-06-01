@@ -10,6 +10,7 @@
 #include <QBasicTimer>
 #include <QOpenGLShaderProgram>
 #include <QOpenGLTexture>
+#include "Model/System.h"
 
 
 class RenderWidget : public QOpenGLWidget, protected QOpenGLFunctions
@@ -45,6 +46,8 @@ private:
     QVector3D rotationAxis;
     qreal angularSpeed;
     QQuaternion rotation;
+
+    System * m_system;
 };
 
 #endif // RENDERWIDGET_H

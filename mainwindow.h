@@ -40,7 +40,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     RenderWidget m_render;
-    System m_system;
+    System * m_system;
 };
 
 #endif // MAINWINDOW_H

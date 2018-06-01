@@ -15,12 +15,19 @@ static const u8 deltaTime = 1;
  */
 
 
+System::System() : m_gravity(),
+    m_wind(),m_atmDensity(), m_particleNb()
+{
+
+}
 void System::change_wind() {
 
 }
 
 void System::start_system() {
 
+    m_particleVector.push_back(new Particle());
+/*
     for(Particle * p = m_particleTab; p < m_particleTab + NBPARTICLEMAX; p++){
 
         if(p->getM_lifeTime() > 0){
@@ -53,11 +60,11 @@ void System::start_system() {
                 p.cameradistance = -1.0f;
             }
 
-            ParticlesCount++;*/
+            ParticlesCount++;
             }
 
         }
-    }
+    }*/
 
 }
 
@@ -93,10 +100,10 @@ void System::setM_particleNb(u16 value) {
 
 void System::check_life_time() {
 
-    for(int i=0; i<NBPARTICLEMAX; i++){
+    for(int i=0; i<NBPARTICLEMAX; i++){/*
            if (m_particleTab[i].getM_lifeTime() == 0){
 
-           }
+           }*/
        }
 }
 

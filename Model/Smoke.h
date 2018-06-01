@@ -8,6 +8,7 @@
 
 #include "Particle.h"
 #include <QVector3D>
+#include "typedef.h"
 
 
 class Smoke: public Particle {
@@ -25,6 +26,8 @@ public:
     {
         m_color = * value;
     }
+    Smoke();
+    Smoke(QVector3D * position, u8 size, u16 lifetime,u8 alpha,f32 density);
 private:
     static QVector3D m_color;
 };

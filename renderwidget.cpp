@@ -1,13 +1,15 @@
 #include "renderwidget.h"
-
 #include <QMouseEvent>
-
+#include "Model/System.h"
 #include <math.h>
 
 RenderWidget::RenderWidget(QWidget *parent) :
     QOpenGLWidget(parent),
     angularSpeed(0)
+
 {
+    m_system = new System();
+    m_system->start_system();
 
 }
 
@@ -23,13 +25,16 @@ RenderWidget::~RenderWidget()
 //! [0]
 void RenderWidget::mousePressEvent(QMouseEvent *e)
 {
+
     // Save mouse press position
     mousePressPosition = QVector2D(e->localPos());
+
 
 }
 
 void RenderWidget::mouseReleaseEvent(QMouseEvent *e)
 {
+
     // Mouse release position - mouse press position
     QVector2D diff = QVector2D(e->localPos()) - mousePressPosition;
 
@@ -45,12 +50,14 @@ void RenderWidget::mouseReleaseEvent(QMouseEvent *e)
 
     // Increase angular speed
     angularSpeed += acc;
+
 }
 //! [0]
 
 //! [1]
 void RenderWidget::timerEvent(QTimerEvent *)
 {
+
     // Decrease angular speed (friction)
     angularSpeed *= 0.99;
 
@@ -64,11 +71,13 @@ void RenderWidget::timerEvent(QTimerEvent *)
         // Request an update
         update();
     }
+
 }
 //! [1]
 
 void RenderWidget::initializeGL()
 {
+
     initializeOpenGLFunctions();
 
     glClearColor(0, 0, 0, 1);
@@ -87,11 +96,13 @@ void RenderWidget::initializeGL()
 
     // Use QBasicTimer because its faster than QTimer
     timer.start(12, this);
+
 }
 
 //! [3]
 void RenderWidget::initShaders()
 {
+
     // Compile vertex shader
     if (!program.addShaderFromSourceFile(QOpenGLShader::Vertex, ":/vshader.glsl"))
         close();
@@ -114,6 +125,7 @@ void RenderWidget::initShaders()
 // run each time the windows is resized
 void RenderWidget::resizeGL(int w, int h)
 {
+
     // Calculate aspect ratio
     qreal aspect = qreal(w) / qreal(h ? h : 1);
 
@@ -133,6 +145,7 @@ void RenderWidget::resizeGL(int w, int h)
 
 void RenderWidget::paintGL()
 {
+
     // Clear color 0nd depth buffer
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 

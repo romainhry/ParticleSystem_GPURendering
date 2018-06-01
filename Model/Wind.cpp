@@ -4,11 +4,11 @@
 
 
 #include "Wind.h"
+#include "typedef.h"
 
 /**
  * Wind implementation
  */
-
 
 /**
  * @return QVector3D

@@ -11,7 +11,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->setupUi(this);
 
-
+    m_system = new System();
     //ui->horizontalLayout->addWidget(&m_render,2,0);
     ui->horizontalLayout->insertWidget(0,&m_render,2,0);
      // m_render.setSizePolicy(QSizePolicy::Maximum,QSizePolicy::Maximum);
@@ -35,25 +35,25 @@ void MainWindow::on_slider_gravity_ui_valueChanged(int value)
 {
     ui->spinBox_gravity_ui->setValue((double)value /10);
 
-    m_system.m_gravity.setM_gravity_factor((f32)value /10);
+    //m_system.m_gravity.setM_gravity_factor((f32)value /10);
 }
 
 void MainWindow::on_spinBox_gravity_ui_valueChanged(double arg1)
 {
     ui->slider_gravity_ui->setValue(arg1 * 10);
-        m_system.m_gravity.setM_gravity_factor((f32)arg1 * 10);
+        //m_system.m_gravity.setM_gravity_factor((f32)arg1 * 10);
 }
 
 void MainWindow::on_slider_atm_factor_ui_valueChanged(int value)
 {
     ui->spinBox_atm_factor_ui->setValue((double)value /10);
-    m_system.setM_atmDensity((f32)value /10);
+   // m_system.setM_atmDensity((f32)value /10);
 }
 
 void MainWindow::on_spinBox_atm_factor_ui_valueChanged(double arg1)
 {
     ui->slider_atm_factor_ui->setValue(arg1 * 10);
-    m_system.setM_atmDensity((f32)arg1 *10);
+    //m_system.setM_atmDensity((f32)arg1 *10);
 
 }
 

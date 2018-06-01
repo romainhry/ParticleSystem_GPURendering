@@ -10,14 +10,16 @@
 #include "Particle.h"
 #include "Gravity.h"
 #include "Wind.h"
+#include <QVector>
 
 #ifndef NBPARTICLEMAX
-#define NBPARTICLEMAX 1000
+#define NBPARTICLEMAX 10
 #endif
 
 class System {
 public: 
     
+    System();
     void change_wind();
     
     void start_system();
@@ -44,8 +46,8 @@ private:
     u16 m_particleNb;
 
 
-    Particle m_particleTab[NBPARTICLEMAX];
-    
+    QVector<Particle*> m_particleVector;
+
     void check_life_time();
     
     void compute_wind();
