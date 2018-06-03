@@ -6,6 +6,10 @@
 #ifndef _SYSTEM_H
 #define _SYSTEM_H
 
+#include <QOpenGLFunctions>
+#include <QOpenGLShaderProgram>
+#include <QOpenGLBuffer>
+
 #include "typedef.h"
 #include "Particle.h"
 #include "Gravity.h"
@@ -16,10 +20,14 @@
 #define NBPARTICLEMAX 10
 #endif
 
-class System {
+class System : protected QOpenGLFunctions {
 public: 
     
     System();
+    ~System();
+
+    void drawGeometry(QOpenGLShaderProgram *program);
+
     void change_wind();
     
     void start_system();
@@ -51,6 +59,11 @@ private:
     void check_life_time();
     
     void compute_wind();
+
+    void initGeometry();
+
+    QOpenGLBuffer arrayBuf;
+    QOpenGLBuffer indexBuf;
 };
 
 #endif //_SYSTEM_H

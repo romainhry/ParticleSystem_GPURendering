@@ -8,6 +8,7 @@ RenderWidget::RenderWidget(QWidget *parent) :
     angularSpeed(0)
 
 {
+    this->makeCurrent();
     m_system = new System();
     m_system->start_system();
 
@@ -154,12 +155,12 @@ void RenderWidget::paintGL()
     humanoide.rotate(rotation);
     humanoide = projection * view * humanoide;
 
-    /*
+
     // Calculate model matrix
     QMatrix4x4 matrix;
     //Set modelview-projection matrix
     program.setUniformValue("mvp", humanoide * matrix);
     //Draw base geometry
-    geometries->drawGeometry(&program);*/
+    m_system->drawGeometry(&program);
 
 }

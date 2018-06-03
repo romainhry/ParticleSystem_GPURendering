@@ -15,9 +15,21 @@ static const u8 deltaTime = 1;
  */
 
 
-System::System() : m_gravity(),
-    m_wind(),m_atmDensity(), m_particleNb()
+System::System() :
+    m_gravity(),
+    m_wind(),
+    m_atmDensity(),
+    m_particleNb(),
+    indexBuf(QOpenGLBuffer::IndexBuffer)
 {
+    //initializeOpenGLFunctions();
+
+    // Generate 2 VBOs
+    arrayBuf.create();
+    indexBuf.create();
+
+    // Initializes cube geometry and transfers it to VBOs
+    initGeometry();
 
 }
 void System::change_wind() {
@@ -109,4 +121,52 @@ void System::check_life_time() {
 
 void System::compute_wind() {
 
+}
+
+void System::initGeometry()
+{
+    /*
+    // Transfer vertex data to VBO 0
+   arrayBuf.bind();
+   arrayBuf.allocate(vertices, nbrVertices * sizeof(VertexData));
+
+   // Transfer index data to VBO 1
+   indexBuf.bind();
+   indexBuf.allocate(indices, nbrIndices * sizeof(GLushort));
+   */
+}
+
+void System::drawGeometry(QOpenGLShaderProgram *program)
+{
+    // Tell OpenGL which VBOs to use
+    arrayBuf.bind();
+    indexBuf.bind();
+
+
+    // Offset for position
+    quintptr offset = 0;
+
+    /*
+    // Tell OpenGL programmable pipeline how to locate vertex position data
+    int vertexLocation = program->attributeLocation("position");
+    program->enableAttributeArray(vertexLocation);
+    program->setAttributeBuffer(vertexLocation, GL_FLOAT, offset, 3, sizeof(VertexData));
+
+    // Offset for texture coordinate
+    offset += sizeof(QVector3D);
+
+    // Tell OpenGL programmable pipeline how to locate vertex texture coordinate data
+    int colorLocation = program->attributeLocation("color");
+    program->enableAttributeArray(colorLocation);
+    program->setAttributeBuffer(colorLocation, GL_FLOAT, offset, 3, sizeof(VertexData));
+
+    // Draw cube geometry using indices from VBO 1
+    glDrawElements(GL_LINES, 6, GL_UNSIGNED_SHORT, 0);
+    */
+}
+
+System::~System()
+{
+    indexBuf.destroy();
+    arrayBuf.destroy();
 }
