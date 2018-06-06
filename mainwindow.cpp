@@ -10,8 +10,6 @@ MainWindow::MainWindow(QWidget *parent) :
    // m_render = new RenderWidget();
 
     ui->setupUi(this);
-
-    m_system = new System();
     //ui->horizontalLayout->addWidget(&m_render,2,0);
     ui->horizontalLayout->insertWidget(0,&m_render,2,0);
      // m_render.setSizePolicy(QSizePolicy::Maximum,QSizePolicy::Maximum);

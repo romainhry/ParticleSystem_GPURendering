@@ -1,16 +1,15 @@
 #include "renderwidget.h"
 #include <QMouseEvent>
-#include "Model/System.h"
+#include "System.h"
 #include <math.h>
 
 RenderWidget::RenderWidget(QWidget *parent) :
     QOpenGLWidget(parent),
+    m_system(0),
     angularSpeed(0)
 
 {
-    this->makeCurrent();
-    m_system = new System();
-    m_system->start_system();
+
 
 }
 
@@ -94,7 +93,7 @@ void RenderWidget::initializeGL()
     glEnable(GL_CULL_FACE);
 
 
-
+    m_system = new System;
     // Use QBasicTimer because its faster than QTimer
     timer.start(12, this);
 

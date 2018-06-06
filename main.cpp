@@ -14,6 +14,7 @@ int main(int argc, char *argv[])
 
     QSurfaceFormat format;
 
+    format.setDepthBufferSize(24);
     QSurfaceFormat::setDefaultFormat(format);
 
     app.setApplicationName("Particle System");

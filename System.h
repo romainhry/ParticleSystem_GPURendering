@@ -11,20 +11,23 @@
 #include <QOpenGLBuffer>
 
 #include "typedef.h"
-#include "Particle.h"
-#include "Gravity.h"
-#include "Wind.h"
+#include "Model/Particle.h"
+#include "Model/Gravity.h"
+#include "Model/Wind.h"
+#include "Model/Smoke.h"
 #include <QVector>
+
+#include <QOpenGLExtraFunctions>
 
 #ifndef NBPARTICLEMAX
 #define NBPARTICLEMAX 10
 #endif
 
-class System : protected QOpenGLFunctions {
+class System : protected QOpenGLExtraFunctions {
 public: 
     
     System();
-    ~System();
+    virtual ~System();
 
     void drawGeometry(QOpenGLShaderProgram *program);
 
@@ -64,6 +67,15 @@ private:
 
     QOpenGLBuffer arrayBuf;
     QOpenGLBuffer indexBuf;
+    static const int MaxPrticles = 500;
+
+    //test buffers
+    GLuint billboard_vertex_buffer;
+    GLuint particles_position_buffer;
+    GLuint particles_color_buffer;
+
+    static GLfloat* g_particule_position_size_data;
+    static GLubyte* g_particule_color_data;
 };
 
 #endif //_SYSTEM_H
