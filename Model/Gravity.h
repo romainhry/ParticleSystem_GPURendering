@@ -7,7 +7,7 @@
 #define _GRAVITY_H
 
 #include "Force.h"
-#include "typedef.h"
+#include "../typedef.h"
 
 
 class Gravity: public Force {

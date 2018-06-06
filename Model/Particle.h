@@ -6,7 +6,7 @@
 #ifndef _PARTICLE_H
 #define _PARTICLE_H
 
-#include "typedef.h"
+#include "../typedef.h"
 #include <QVector3D>
 #include <QOpenGLFunctions>
 #include <QOpenGLShaderProgram>

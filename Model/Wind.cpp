@@ -4,7 +4,7 @@
 
 
 #include "Wind.h"
-#include "typedef.h"
+#include "../typedef.h"
 
 /**
  * Wind implementation

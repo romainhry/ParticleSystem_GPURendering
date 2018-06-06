@@ -4,7 +4,7 @@
 
 
 #include "Screw.h"
-#include "typedef.h"
+#include "../typedef.h"
 
 /**
  * Screw implementation

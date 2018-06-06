@@ -4,7 +4,7 @@
 
 
 #include "Fire.h"
-#include "typedef.h"
+#include "../typedef.h"
 
 /**
  * Fire implementation

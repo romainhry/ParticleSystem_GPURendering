@@ -7,7 +7,7 @@
 #define _WATER_H
 
 #include "Particle.h"
-#include "typedef.h"
+#include "../typedef.h"
 
 
 class Water: public Particle {

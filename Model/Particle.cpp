@@ -4,7 +4,7 @@
 
 
 #include "Particle.h"
-#include "typedef.h"
+#include "../typedef.h"
 #include <QOpenGLFunctions>
 #include <QOpenGLShaderProgram>
 #include <QOpenGLBuffer>

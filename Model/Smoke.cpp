@@ -4,7 +4,7 @@
 
 #include <QVector3D>
 #include "Smoke.h"
-#include "typedef.h"
+#include "../typedef.h"
 
 /**
  * Smoke implementation

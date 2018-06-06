@@ -7,7 +7,7 @@
 #define _FIRE_H
 
 #include "Particle.h"
-#include "typedef.h"
+#include "../typedef.h"
 
 
 class Fire: public Particle {

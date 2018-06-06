@@ -7,7 +7,7 @@
 #define _SCREW_H
 
 #include "Wind.h"
-#include "typedef.h"
+#include "../typedef.h"
 
 
 class Screw: public Wind {

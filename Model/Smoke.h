@@ -8,7 +8,7 @@
 
 #include "Particle.h"
 #include <QVector3D>
-#include "typedef.h"
+#include "../typedef.h"
 
 
 class Smoke: public Particle {
