@@ -72,7 +72,7 @@ struct VertexData
 
 
 
-/*
+
 VertexData vertices[] = {
     {QVector3D(0.0f, 0.0f, 0.0f), QVector3D(1.0f, 0.0f,0.0f)},
     {QVector3D(1.0f, 0.0f, 0.0f), QVector3D(1.0f, 0.0f,0.0f)},
@@ -90,7 +90,7 @@ GLushort indices[] = {
     4,5
 };
 
-const int nbrIndices = 6;*/
+const int nbrIndices = 6;
 
 
 //! [0]
@@ -129,27 +129,33 @@ void System::initGeometry()
 
 
     for(int i = 0; i < MaxPrticles; i++){
-        float test = (rand()/RAND_MAX)-1;
+        f32 test1 = ((f32)rand()/RAND_MAX)*6-3;
+        f32 test2 = ((f32)rand()/RAND_MAX)*6-3;
+        f32 test3 = ((f32)rand()/RAND_MAX)*6-3;
+
+
         QVector3D* p; u8 s; u16 l; u8 a; f32 d;
-        p = new QVector3D(test,test,test);          //position
+        p = new QVector3D(test1,test2,test3);          //position
+
         s = 1;                                      //size
         l = 125;                                    //lifeTime
         a = 1;                                      //alpha
         d = 1;                                      //density
 
         Smoke* temp = new Smoke(p,s,l,a,d);
-        m_particleVector.push_back(new Smoke());
+
+        m_particleVector.push_back(temp);
     }
 
-    /*
+
     // Transfer vertex data to VBO 0
     arrayBuf.bind();
-    arrayBuf.allocate(vertices, nbrVertices * sizeof(VertexData));
+    arrayBuf.allocate(vertices, System::MaxPrticles * sizeof(VertexData));
 
     // Transfer index data to VBO 1
     indexBuf.bind();
     indexBuf.allocate(indices, nbrIndices * sizeof(GLushort));
-    */
+
 
 
 
@@ -217,10 +223,14 @@ void System::drawGeometry(QOpenGLShaderProgram *program)
     // Draw cube geometry using indices from VBO 1
     glDrawElements(GL_LINES, 6, GL_UNSIGNED_SHORT, 0);
     */
-    std::cout << m_particleVector.size() << '\n';
+    qInfo() << m_particleVector.size();
 
     int ParticlesCount = m_particleVector.size();
 
+
+    this->update_particles();
+
+    /*
 
     //////////Test
     // Update the buffers that OpenGL uses for rendering.
@@ -237,12 +247,13 @@ void System::drawGeometry(QOpenGLShaderProgram *program)
     glBufferData(GL_ARRAY_BUFFER, System::MaxPrticles * 4 * sizeof(GLubyte), NULL, GL_STREAM_DRAW); // Buffer orphaning, a common way to improve streaming perf. See above link for details.
     glBufferSubData(GL_ARRAY_BUFFER, 0, ParticlesCount * sizeof(GLubyte) * 4, g_particule_color_data);
 
-    /*
+
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+/*
     // Use our shader
-    glUseProgram(programID);
+    glUseProgram(program);
 
     // Bind our texture in Texture Unit 0
     glActiveTexture(GL_TEXTURE0);
@@ -254,7 +265,7 @@ void System::drawGeometry(QOpenGLShaderProgram *program)
     glUniform3f(CameraRight_worldspace_ID, ViewMatrix[0][0], ViewMatrix[1][0], ViewMatrix[2][0]);
     glUniform3f(CameraUp_worldspace_ID   , ViewMatrix[0][1], ViewMatrix[1][1], ViewMatrix[2][1]);
 
-    glUniformMatrix4fv(ViewProjMatrixID, 1, GL_FALSE, &ViewProjectionMatrix[0][0]);*/
+    glUniformMatrix4fv(ViewProjMatrixID, 1, GL_FALSE, &ViewProjectionMatrix[0][0]);
 
     // 1rst attribute buffer : vertices
     glEnableVertexAttribArray(0);
@@ -312,8 +323,64 @@ void System::drawGeometry(QOpenGLShaderProgram *program)
     glDisableVertexAttribArray(0);
     glDisableVertexAttribArray(1);
     glDisableVertexAttribArray(2);
+    */
+
+    ////// NEW TEST
+    ///
+
+     VertexData vertices[ParticlesCount];
+    for(int i =0; i < ParticlesCount; i++){
+       vertices[i]= {m_particleVector.at(i)->getM_position(),m_particleVector.at(i)->getM_color()};
+       qInfo() << vertices[i].position;
+    }
+
+
+
+   /* VertexData vertices[] = {
+        {QVector3D(0.0f, 0.0f, 0.0f), QVector3D(0.0f, 1.0f,0.0f)},
+        {QVector3D(1.0f, 0.0f, 0.0f), QVector3D(0.0f, 1.0f,0.0f)},
+        {QVector3D(0.0f, 0.0f, 0.0f), QVector3D(1.0f, 0.0f,0.0f)},
+        {QVector3D(0.0f, 1.0f, 0.0f), QVector3D(1.0f, 0.0f,0.0f)},
+        {QVector3D(0.0f, 0.0f, 0.0f), QVector3D(0.0f, 0.0f,1.0f)},
+        {QVector3D(0.0f, 0.0f, 1.0f), QVector3D(0.0f, 0.0f,1.0f)},
+    };*/
+
+    // Tell OpenGL which VBOs to use
+    arrayBuf.bind();
+    arrayBuf.allocate(vertices, System::MaxPrticles * sizeof(VertexData));
+    indexBuf.bind();
+
+
+    // Offset for position
+    quintptr offset = 0;
+
+    // Tell OpenGL programmable pipeline how to locate vertex position data
+    int vertexLocation = program->attributeLocation("position");
+    program->enableAttributeArray(vertexLocation);
+    program->setAttributeBuffer(vertexLocation, GL_FLOAT, offset, 3, sizeof(VertexData));
+
+    // Offset for texture coordinate
+    offset += sizeof(QVector3D);
+
+    // Tell OpenGL programmable pipeline how to locate vertex texture coordinate data
+    int colorLocation = program->attributeLocation("color");
+    program->enableAttributeArray(colorLocation);
+    program->setAttributeBuffer(colorLocation, GL_FLOAT, offset, 3, sizeof(VertexData));
+
+    // Draw cube geometry using indices from VBO 1
+    //glDrawElements(GL_LINES, 6, GL_UNSIGNED_SHORT, 0);
+    glDrawArrays(GL_POINTS, 0, System::MaxPrticles);
+
 }
 //! [2]
 
 void System::start_system(){
+}
+
+/**
+ * TODO
+ * updates all particles taking into account all the forces and the lifetime
+ */
+void System::update_particles(){
+
 }

@@ -10,11 +10,15 @@
 #include <QVector3D>
 #include "../typedef.h"
 
+const static QVector3D m_color = QVector3D(1,1,1);
 
 class Smoke: public Particle {
+private:
+
+
 public:
 
-    static QVector3D getM_color()
+    QVector3D getM_color()
     {
         return m_color;
     }
@@ -22,14 +26,13 @@ public:
     /**
      * @param value
      */
-    static void setM_color(QVector3D * value)
+    /*static void setM_color(QVector3D * value)
     {
         m_color = * value;
-    }
+    }*/
     Smoke();
     Smoke(QVector3D * position, u8 size, u16 lifetime,u8 alpha,f32 density);
-private:
-    static QVector3D m_color;
+
 };
 
 #endif //_SMOKE_H

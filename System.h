@@ -67,7 +67,7 @@ private:
 
     QOpenGLBuffer arrayBuf;
     QOpenGLBuffer indexBuf;
-    static const int MaxPrticles = 500;
+    static const int MaxPrticles = 250;
 
     //test buffers
     GLuint billboard_vertex_buffer;
@@ -76,6 +76,8 @@ private:
 
     static GLfloat* g_particule_position_size_data;
     static GLubyte* g_particule_color_data;
+
+    void update_particles();
 };
 
 #endif //_SYSTEM_H

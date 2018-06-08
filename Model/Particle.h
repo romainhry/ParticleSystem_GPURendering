@@ -62,6 +62,8 @@ public:
      */
     void setM_speed(QVector3D * value);
 
+    virtual QVector3D getM_color() {};
+
 
      ~Particle();
 protected: 

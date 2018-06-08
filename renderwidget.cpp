@@ -134,7 +134,7 @@ void RenderWidget::resizeGL(int w, int h)
 
     // Set view matrix
     view.setToIdentity();
-    view.translate({0,-10,-30});
+    view.translate({0,0,-30});
 
     // Reset projection
     projection.setToIdentity();
