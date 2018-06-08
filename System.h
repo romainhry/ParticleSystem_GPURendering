@@ -31,7 +31,7 @@ public:
 
     void drawGeometry(QOpenGLShaderProgram *program);
 
-    void change_wind();
+    void change_wind(QVector3D *);
     
     void start_system();
     
@@ -49,12 +49,16 @@ public:
      */
     void setM_particleNb(u16 value);
 
-    Gravity m_gravity;
-    Wind m_wind;
+    void setM_windFactor(f32);
+    void setM_gravity(f32);
+
+
 
 private: 
     f32 m_atmDensity;
     u16 m_particleNb;
+    Gravity m_gravity;
+    Wind m_wind;
 
 
     QVector<Particle*> m_particleVector;
