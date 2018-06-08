@@ -163,3 +163,8 @@ void RenderWidget::paintGL()
     m_system->drawGeometry(&program);
 
 }
+
+System * RenderWidget::getM_system()
+{
+    return m_system;
+}

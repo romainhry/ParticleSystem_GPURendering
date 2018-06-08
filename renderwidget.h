@@ -19,6 +19,7 @@ class RenderWidget : public QOpenGLWidget, protected QOpenGLFunctions
 
 public:
     explicit RenderWidget(QWidget *parent = 0);
+    System * getM_system();
     ~RenderWidget();
 
 protected:
@@ -48,6 +49,7 @@ private:
     QQuaternion rotation;
 
     System * m_system;
+
 };
 
 #endif // RENDERWIDGET_H

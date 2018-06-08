@@ -378,9 +378,60 @@ void System::start_system(){
 }
 
 /**
+ * @return float
+ */
+f32 System::getM_atmDensity() {
+    return m_atmDensity;
+}
+
+/**
+ * @param value
+ */
+void System::setM_atmDensity(f32 value) {
+
+    m_atmDensity = value;
+}
+
+/**
+ * @return u16
+ */
+u16 System::getM_particleNb() {
+    return m_particleNb;
+}
+
+/**
+ * @param value
+ */
+void System::setM_particleNb(u16 value) {
+    m_particleNb = value;
+
+}
+
+
+/**
+ * @param value
+ */
+void System::setM_windFactor(f32 factor) {
+    m_wind.setM_factor(factor);
+}
+
+/**
+ * @param value
+ */
+void System::setM_gravity(f32 factor) {
+    m_gravity.setM_gravity_factor(factor);
+}
+
+void System::change_wind(QVector3D * vec) {
+
+    m_wind.setM_translation(vec);
+
+}
+
+
+/**
  * TODO
  * updates all particles taking into account all the forces and the lifetime
  */
 void System::update_particles(){
-
 }
