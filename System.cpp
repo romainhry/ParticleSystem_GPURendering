@@ -128,6 +128,8 @@ void System::initGeometry()
 
 
 
+    //Not useful anymore
+    /*
     for(int i = 0; i < MaxPrticles; i++){
         f32 test1 = ((f32)rand()/RAND_MAX)*6-3;
         f32 test2 = ((f32)rand()/RAND_MAX)*6-3;
@@ -145,7 +147,7 @@ void System::initGeometry()
         Smoke* temp = new Smoke(p,s,l,a,d);
 
         m_particleVector.push_back(temp);
-    }
+    }*/
 
 
     // Transfer vertex data to VBO 0
@@ -224,9 +226,6 @@ void System::drawGeometry(QOpenGLShaderProgram *program)
     glDrawElements(GL_LINES, 6, GL_UNSIGNED_SHORT, 0);
     */
     qInfo() << m_particleVector.size();
-
-    int ParticlesCount = m_particleVector.size();
-
 
     this->update_particles();
 
@@ -328,7 +327,8 @@ void System::drawGeometry(QOpenGLShaderProgram *program)
     ////// NEW TEST
     ///
 
-     VertexData vertices[ParticlesCount];
+    int ParticlesCount = m_particleVector.size();
+    VertexData vertices[ParticlesCount];
     for(int i =0; i < ParticlesCount; i++){
        vertices[i]= {m_particleVector.at(i)->getM_position(),m_particleVector.at(i)->getM_color()};
        qInfo() << vertices[i].position;
@@ -369,6 +369,7 @@ void System::drawGeometry(QOpenGLShaderProgram *program)
 
     // Draw cube geometry using indices from VBO 1
     //glDrawElements(GL_LINES, 6, GL_UNSIGNED_SHORT, 0);
+    glPointSize(2.0);
     glDrawArrays(GL_POINTS, 0, System::MaxPrticles);
 
 }
@@ -433,5 +434,59 @@ void System::change_wind(QVector3D * vec) {
  * TODO
  * updates all particles taking into account all the forces and the lifetime
  */
-void System::update_particles(){
+void System::update_particles()
+{
+
+    this->clean_system();
+
+    int nbParticles = m_particleVector.size();
+
+    for(int i = 0; i < nbParticles;   i++){
+
+        Particle* part = m_particleVector.at(i);
+
+        part->reduce_lifeTime(1);
+    }
+
+    int nb_missing_particles =  MaxPrticles-nbParticles;
+    if(nb_missing_particles > 15){
+        nb_missing_particles = 15;
+    }
+
+    //TODO make the particle factory outside of this
+    for(int i = 0; i < nb_missing_particles; i++){
+        f32 test1 = ((f32)rand()/RAND_MAX)*6-3;
+        f32 test2 = ((f32)rand()/RAND_MAX)*6-3;
+        f32 test3 = ((f32)rand()/RAND_MAX)*6-3;
+
+
+        QVector3D* p; u8 s; u16 l; u8 a; f32 d;
+        p = new QVector3D(test1,test2,test3);          //position
+
+        s = 1;                                      //size
+        l = 125;                                    //lifeTime
+        a = 1;                                      //alpha
+        d = 1;                                      //density
+
+        Smoke* temp = new Smoke(p,s,l,a,d);
+
+        m_particleVector.push_back(temp);
+    }
+
+}
+
+
+void System::clean_system(){
+
+    int nbParticles = m_particleVector.size();
+
+    for(int i = nbParticles-1; i >= 0;   i--){
+
+        Particle* part = m_particleVector.at(i);
+
+        if(part->getM_lifeTime() < 1){
+            m_particleVector.remove(i);
+            delete part;
+        }
+    }
 }

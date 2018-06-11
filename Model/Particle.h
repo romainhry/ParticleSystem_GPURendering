@@ -62,6 +62,8 @@ public:
      */
     void setM_speed(QVector3D * value);
 
+    void reduce_lifeTime(u16 time);
+
     virtual QVector3D getM_color() {};
 
 

@@ -108,5 +108,13 @@ void Particle::setM_speed(QVector3D * value)
     m_speed = * value;
 }
 
+void Particle::reduce_lifeTime(u16 time)
+{
+    if(m_lifeTime > time)
+        m_lifeTime -= time;
+    else
+        m_lifeTime = 0;
+}
+
 Particle::~Particle() {
 }

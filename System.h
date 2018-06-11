@@ -82,6 +82,8 @@ private:
     static GLubyte* g_particule_color_data;
 
     void update_particles();
+
+    void clean_system();
 };
 
 #endif //_SYSTEM_H
