@@ -8,6 +8,7 @@
 #include <QQuaternion>
 #include <QVector2D>
 #include <QBasicTimer>
+#include <QTimer>
 #include <QOpenGLShaderProgram>
 #include <QOpenGLTexture>
 #include "System.h"
@@ -34,8 +35,14 @@ protected:
     void initShaders();
     void initTextures();
 
+private slots:
+    void animate();
+
+
 private:
     QBasicTimer timer;
+
+    QTimer animationTimer;
     QOpenGLShaderProgram program;
 
 

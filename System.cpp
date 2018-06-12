@@ -60,8 +60,8 @@
 
 static const u8 deltaTime = 1;
 
-GLfloat* System::g_particule_position_size_data = new GLfloat[MaxPrticles * 4];
-GLubyte* System::g_particule_color_data         = new GLubyte[MaxPrticles * 4];
+GLfloat* System::g_particule_position_size_data = new GLfloat[MaxParticles * 4];
+GLubyte* System::g_particule_color_data         = new GLubyte[MaxParticles * 4];
 
 
 struct VertexData
@@ -95,7 +95,7 @@ const int nbrIndices = 6;
 
 //! [0]
 System::System():
-    m_gravity(),
+    m_gravity(1),
     m_wind(),
     m_atmDensity(),
     m_particleNb(),
@@ -152,7 +152,7 @@ void System::initGeometry()
 
     // Transfer vertex data to VBO 0
     arrayBuf.bind();
-    arrayBuf.allocate(vertices, System::MaxPrticles * sizeof(VertexData));
+    arrayBuf.allocate(vertices, System::MaxParticles * sizeof(VertexData));
 
     // Transfer index data to VBO 1
     indexBuf.bind();
@@ -182,14 +182,14 @@ void System::initGeometry()
     glGenBuffers(1, &particles_position_buffer);
     glBindBuffer(GL_ARRAY_BUFFER, particles_position_buffer);
     // Initialize with empty (NULL) buffer : it will be updated later, each frame.
-    glBufferData(GL_ARRAY_BUFFER, MaxPrticles * 4 * sizeof(GLfloat), NULL, GL_STREAM_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, MaxParticles * 4 * sizeof(GLfloat), NULL, GL_STREAM_DRAW);
 
 
     // The VBO containing the colors of the particles
     glGenBuffers(1, &particles_color_buffer);
     glBindBuffer(GL_ARRAY_BUFFER, particles_color_buffer);
     // Initialize with empty (NULL) buffer : it will be updated later, each frame.
-    glBufferData(GL_ARRAY_BUFFER, MaxPrticles * 4 * sizeof(GLubyte), NULL, GL_STREAM_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, MaxParticles * 4 * sizeof(GLubyte), NULL, GL_STREAM_DRAW);
 
 
 
@@ -225,9 +225,8 @@ void System::drawGeometry(QOpenGLShaderProgram *program)
     // Draw cube geometry using indices from VBO 1
     glDrawElements(GL_LINES, 6, GL_UNSIGNED_SHORT, 0);
     */
-    qInfo() << m_particleVector.size();
 
-    this->update_particles();
+
 
     /*
 
@@ -331,7 +330,6 @@ void System::drawGeometry(QOpenGLShaderProgram *program)
     VertexData vertices[ParticlesCount];
     for(int i =0; i < ParticlesCount; i++){
        vertices[i]= {m_particleVector.at(i)->getM_position(),m_particleVector.at(i)->getM_color()};
-       qInfo() << vertices[i].position;
     }
 
 
@@ -347,7 +345,7 @@ void System::drawGeometry(QOpenGLShaderProgram *program)
 
     // Tell OpenGL which VBOs to use
     arrayBuf.bind();
-    arrayBuf.allocate(vertices, System::MaxPrticles * sizeof(VertexData));
+    arrayBuf.allocate(vertices, System::MaxParticles * sizeof(VertexData));
     indexBuf.bind();
 
 
@@ -370,7 +368,7 @@ void System::drawGeometry(QOpenGLShaderProgram *program)
     // Draw cube geometry using indices from VBO 1
     //glDrawElements(GL_LINES, 6, GL_UNSIGNED_SHORT, 0);
     glPointSize(2.0);
-    glDrawArrays(GL_POINTS, 0, System::MaxPrticles);
+    glDrawArrays(GL_POINTS, 0, System::MaxParticles);
 
 }
 //! [2]
@@ -434,10 +432,10 @@ void System::change_wind(QVector3D * vec) {
  * TODO
  * updates all particles taking into account all the forces and the lifetime
  */
-void System::update_particles()
+void System::update_particles(s32 pRefresh_delay_s32)
 {
 
-    this->clean_system();
+    clean_system();
 
     int nbParticles = m_particleVector.size();
 
@@ -445,10 +443,18 @@ void System::update_particles()
 
         Particle* part = m_particleVector.at(i);
 
-        part->reduce_lifeTime(1);
+        part->reduce_lifeTime(pRefresh_delay_s32);
+
+        // Simulate simple physics : gravity only, no collisions
+        QVector3D newSpeed = part->getM_speed() + m_gravity.getM_gravity() * pRefresh_delay_s32 * 0.000001f;
+        part->setM_speed(&newSpeed);
+        QVector3D newPos = (part->getM_position() + part->getM_speed() * pRefresh_delay_s32);
+        part->setM_position(&newPos);
+
+
     }
 
-    int nb_missing_particles =  MaxPrticles-nbParticles;
+    int nb_missing_particles =  MaxParticles-nbParticles;
     if(nb_missing_particles > 15){
         nb_missing_particles = 15;
     }
@@ -464,7 +470,7 @@ void System::update_particles()
         p = new QVector3D(test1,test2,test3);          //position
 
         s = 1;                                      //size
-        l = 125;                                    //lifeTime
+        l = 5000;                                    //lifeTime
         a = 1;                                      //alpha
         d = 1;                                      //density
 
@@ -478,9 +484,8 @@ void System::update_particles()
 
 void System::clean_system(){
 
-    int nbParticles = m_particleVector.size();
 
-    for(int i = nbParticles-1; i >= 0;   i--){
+    for(int i = m_particleVector.size()-1; i >= 0;   i--){
 
         Particle* part = m_particleVector.at(i);
 

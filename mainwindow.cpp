@@ -2,6 +2,9 @@
 #include "ui_mainwindow.h"
 #include "renderwidget.h"
 #include <QVector3D>
+#include <thread>
+
+using namespace std;
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -15,6 +18,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->horizontalLayout->insertWidget(0,&m_render,2,0);
 
     m_system = m_render.getM_system();
+
+
      // m_render.setSizePolicy(QSizePolicy::Maximum,QSizePolicy::Maximum);
     //ui->renderLayout->addStretch(10);
 

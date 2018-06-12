@@ -52,6 +52,8 @@ public:
     void setM_windFactor(f32);
     void setM_gravity(f32);
 
+    void update_particles(s32 pRefresh_delay_s32);
+
 
 
 private: 
@@ -71,7 +73,7 @@ private:
 
     QOpenGLBuffer arrayBuf;
     QOpenGLBuffer indexBuf;
-    static const int MaxPrticles = 250;
+    static const int MaxParticles = 250;
 
     //test buffers
     GLuint billboard_vertex_buffer;
@@ -81,7 +83,7 @@ private:
     static GLfloat* g_particule_position_size_data;
     static GLubyte* g_particule_color_data;
 
-    void update_particles();
+
 
     void clean_system();
 };

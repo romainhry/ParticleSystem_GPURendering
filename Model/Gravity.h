@@ -14,6 +14,9 @@ class Gravity: public Force {
 public: 
     
     f32 getM_gravity_factor();
+    QVector3D getM_gravity();
+
+
     
     /**
      * @param value
@@ -21,8 +24,11 @@ public:
     void setM_gravity_factor(f32 value);
 
     QMatrix4x4 get_matrix();
+
+    Gravity(f32 factor);
 private: 
     f32 m_gravity_factor;
+    QVector3D m_gravity;
 };
 
 #endif //_GRAVITY_H

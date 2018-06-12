@@ -3,6 +3,8 @@
 #include "System.h"
 #include <math.h>
 
+#define REFRESH_DELAY 25
+
 RenderWidget::RenderWidget(QWidget *parent) :
     QOpenGLWidget(parent),
     m_system(0),
@@ -11,6 +13,9 @@ RenderWidget::RenderWidget(QWidget *parent) :
 {
 
 
+    animationTimer.setSingleShot(false);
+    connect(&animationTimer, SIGNAL(timeout()), this, SLOT(animate()));
+    animationTimer.start(REFRESH_DELAY);
 }
 
 RenderWidget::~RenderWidget()
@@ -67,9 +72,6 @@ void RenderWidget::timerEvent(QTimerEvent *)
     } else {
         // Update rotation
         rotation = QQuaternion::fromAxisAndAngle(rotationAxis, angularSpeed) * rotation;
-
-        // Request an update
-        update();
     }
 
 }
@@ -167,4 +169,10 @@ void RenderWidget::paintGL()
 System * RenderWidget::getM_system()
 {
     return m_system;
+}
+
+void RenderWidget::animate()
+{
+    m_system->update_particles(REFRESH_DELAY);
+    update();
 }
