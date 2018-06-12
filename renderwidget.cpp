@@ -11,8 +11,6 @@ RenderWidget::RenderWidget(QWidget *parent) :
     angularSpeed(0)
 
 {
-
-
     animationTimer.setSingleShot(false);
     connect(&animationTimer, SIGNAL(timeout()), this, SLOT(animate()));
     animationTimer.start(REFRESH_DELAY);
@@ -175,4 +173,20 @@ void RenderWidget::animate()
 {
     m_system->update_particles(REFRESH_DELAY);
     update();
+}
+
+void RenderWidget::change_wind(QVector3D * vect){
+    m_system->change_wind(vect);
+}
+
+void RenderWidget::setM_windFactor(f32 value){
+    m_system->setM_windFactor(value);
+}
+
+void RenderWidget::setM_atmDensity(f32 value){
+    m_system->setM_atmDensity(value);
+}
+
+void RenderWidget::setM_gravity(f32 value){
+    m_system->setM_gravity(value);
 }

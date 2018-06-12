@@ -23,6 +23,12 @@ public:
     System * getM_system();
     ~RenderWidget();
 
+
+    void change_wind(QVector3D *);
+    void setM_windFactor(f32);
+    void setM_atmDensity(f32 value);
+    void setM_gravity(f32);
+
 protected:
     void mousePressEvent(QMouseEvent *e) override;
     void mouseReleaseEvent(QMouseEvent *e) override;
