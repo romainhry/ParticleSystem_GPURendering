@@ -439,6 +439,10 @@ void System::update_particles(s32 pRefresh_delay_s32)
 
     int nbParticles = m_particleVector.size();
 
+    QVector3D gravity = m_gravity.getM_gravity() * pRefresh_delay_s32 * 0.000001f;
+
+    QVector3D wind = m_wind.getM_translation()*m_wind.getM_translation()* pRefresh_delay_s32 * 0.000001f;
+
     for(int i = 0; i < nbParticles;   i++){
 
         Particle* part = m_particleVector.at(i);
@@ -446,7 +450,7 @@ void System::update_particles(s32 pRefresh_delay_s32)
         part->reduce_lifeTime(pRefresh_delay_s32);
 
         // Simulate simple physics : gravity only, no collisions
-        QVector3D newSpeed = part->getM_speed() + m_gravity.getM_gravity() * pRefresh_delay_s32 * 0.000001f;
+        QVector3D newSpeed = part->getM_speed() + gravity + wind;
         part->setM_speed(&newSpeed);
         QVector3D newPos = (part->getM_position() + part->getM_speed() * pRefresh_delay_s32);
         part->setM_position(&newPos);
