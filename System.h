@@ -75,7 +75,7 @@ private:
     QOpenGLBuffer indexBuf;
 
     static const int MAX_PARTICLES = 250;
-    static const int ATM_DENSITY = 13;
+    static const int ATM_DENSITY = 12;
 
     //test buffers
     GLuint billboard_vertex_buffer;

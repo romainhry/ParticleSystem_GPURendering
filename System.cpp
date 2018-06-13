@@ -347,7 +347,7 @@ void System::drawGeometry(QOpenGLShaderProgram *program)
 
     // Tell OpenGL which VBOs to use
     arrayBuf.bind();
-    arrayBuf.allocate(vertices, System::MAX_PARTICLES * sizeof(VertexData));
+    arrayBuf.allocate(vertices, MAX_PARTICLES * sizeof(VertexData));
     indexBuf.bind();
 
 
