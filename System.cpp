@@ -58,10 +58,12 @@
 #include <time.h>       /* time */
 #include <iostream>
 
+#include <QDebug>
+
 static const u8 deltaTime = 1;
 
-GLfloat* System::g_particule_position_size_data = new GLfloat[MaxParticles * 4];
-GLubyte* System::g_particule_color_data         = new GLubyte[MaxParticles * 4];
+GLfloat* System::g_particule_position_size_data = new GLfloat[MAX_PARTICLES * 4];
+GLubyte* System::g_particule_color_data         = new GLubyte[MAX_PARTICLES * 4];
 
 
 struct VertexData
@@ -97,7 +99,7 @@ const int nbrIndices = 6;
 System::System():
     m_gravity(1),
     m_wind(),
-    m_atmDensity(),
+    m_atmDensityFactor(1),
     m_particleNb(),
     indexBuf(QOpenGLBuffer::IndexBuffer)
 {
@@ -152,7 +154,7 @@ void System::initGeometry()
 
     // Transfer vertex data to VBO 0
     arrayBuf.bind();
-    arrayBuf.allocate(vertices, System::MaxParticles * sizeof(VertexData));
+    arrayBuf.allocate(vertices, System::MAX_PARTICLES * sizeof(VertexData));
 
     // Transfer index data to VBO 1
     indexBuf.bind();
@@ -182,14 +184,14 @@ void System::initGeometry()
     glGenBuffers(1, &particles_position_buffer);
     glBindBuffer(GL_ARRAY_BUFFER, particles_position_buffer);
     // Initialize with empty (NULL) buffer : it will be updated later, each frame.
-    glBufferData(GL_ARRAY_BUFFER, MaxParticles * 4 * sizeof(GLfloat), NULL, GL_STREAM_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, MAX_PARTICLES * 4 * sizeof(GLfloat), NULL, GL_STREAM_DRAW);
 
 
     // The VBO containing the colors of the particles
     glGenBuffers(1, &particles_color_buffer);
     glBindBuffer(GL_ARRAY_BUFFER, particles_color_buffer);
     // Initialize with empty (NULL) buffer : it will be updated later, each frame.
-    glBufferData(GL_ARRAY_BUFFER, MaxParticles * 4 * sizeof(GLubyte), NULL, GL_STREAM_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, MAX_PARTICLES * 4 * sizeof(GLubyte), NULL, GL_STREAM_DRAW);
 
 
 
@@ -345,7 +347,7 @@ void System::drawGeometry(QOpenGLShaderProgram *program)
 
     // Tell OpenGL which VBOs to use
     arrayBuf.bind();
-    arrayBuf.allocate(vertices, System::MaxParticles * sizeof(VertexData));
+    arrayBuf.allocate(vertices, System::MAX_PARTICLES * sizeof(VertexData));
     indexBuf.bind();
 
 
@@ -368,7 +370,7 @@ void System::drawGeometry(QOpenGLShaderProgram *program)
     // Draw cube geometry using indices from VBO 1
     //glDrawElements(GL_LINES, 6, GL_UNSIGNED_SHORT, 0);
     glPointSize(2.0);
-    glDrawArrays(GL_POINTS, 0, System::MaxParticles);
+    glDrawArrays(GL_POINTS, 0, System::MAX_PARTICLES);
 
 }
 //! [2]
@@ -379,16 +381,16 @@ void System::start_system(){
 /**
  * @return float
  */
-f32 System::getM_atmDensity() {
-    return m_atmDensity;
+f32 System::getM_atmDensityFactor() {
+    return m_atmDensityFactor;
 }
 
 /**
  * @param value
  */
-void System::setM_atmDensity(f32 value) {
+void System::setM_atmDensityFactor(f32 value) {
 
-    m_atmDensity = value;
+    m_atmDensityFactor = value;
 }
 
 /**
@@ -439,17 +441,22 @@ void System::update_particles(s32 pRefresh_delay_s32)
 
     int nbParticles = m_particleVector.size();
 
+    QVector3D wind = m_wind.getM_translation() * m_wind.getM_factor() ;    
 
-    QVector3D wind = m_wind.getM_translation() * m_wind.getM_factor() ;
+    f32 atmDensity = ATM_DENSITY*m_atmDensityFactor;
 
     for(int i = 0; i < nbParticles;   i++){
 
         Particle* part = m_particleVector.at(i);
 
+        QVector3D density = QVector3D(0,-1,0)*(part->getM_density()-atmDensity);
+
+        qDebug() << density;
+
         part->reduce_lifeTime(pRefresh_delay_s32);
 
         // Simulate simple physics : gravity only, no collisions
-        QVector3D newSpeed = part->getM_speed() + (m_gravity.getM_gravity() + wind) * pRefresh_delay_s32 * 0.000001f;
+        QVector3D newSpeed = part->getM_speed() + (m_gravity.getM_gravity() + wind + density) * pRefresh_delay_s32 * 0.000001f;
         part->setM_speed(&newSpeed);
         QVector3D newPos = (part->getM_position() + part->getM_speed() * pRefresh_delay_s32);
         part->setM_position(&newPos);
@@ -457,7 +464,7 @@ void System::update_particles(s32 pRefresh_delay_s32)
 
     }
 
-    int nb_missing_particles =  MaxParticles-nbParticles;
+    int nb_missing_particles =  MAX_PARTICLES-nbParticles;
     if(nb_missing_particles > 15){
         nb_missing_particles = 15;
     }
@@ -475,7 +482,7 @@ void System::update_particles(s32 pRefresh_delay_s32)
         s = 1;                                      //size
         l = 5000;                                    //lifeTime
         a = 1;                                      //alpha
-        d = 1;                                      //density
+        d = 0.2;                                      //density
 
         Smoke* temp = new Smoke(p,s,l,a,d);
 

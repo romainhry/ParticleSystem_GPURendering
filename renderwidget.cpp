@@ -183,8 +183,8 @@ void RenderWidget::setM_windFactor(f32 value){
     m_system->setM_windFactor(value);
 }
 
-void RenderWidget::setM_atmDensity(f32 value){
-    m_system->setM_atmDensity(value);
+void RenderWidget::setM_atmDensityFactor(f32 value){
+    m_system->setM_atmDensityFactor(value);
 }
 
 void RenderWidget::setM_gravity(f32 value){

@@ -55,14 +55,14 @@ void MainWindow::on_slider_atm_factor_ui_valueChanged(int value)
 {
     f32 newValue = (f32)value /10;
     ui->spinBox_atm_factor_ui->setValue(newValue);
-    m_render.setM_atmDensity(newValue);
+    m_render.setM_atmDensityFactor(newValue);
 }
 
 void MainWindow::on_spinBox_atm_factor_ui_valueChanged(f64 arg1)
 {
     f32 newValue = arg1 * 10;
     ui->slider_atm_factor_ui->setValue(newValue);
-    m_render.setM_atmDensity(newValue);
+    m_render.setM_atmDensityFactor(newValue);
 
 }
 

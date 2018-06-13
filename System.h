@@ -35,12 +35,12 @@ public:
     
     void start_system();
     
-    float getM_atmDensity();
+    float getM_atmDensityFactor();
     
     /**
      * @param value
      */
-    void setM_atmDensity(f32 value);
+    void setM_atmDensityFactor(f32 value);
     
     u16 getM_particleNb();
     
@@ -57,7 +57,7 @@ public:
 
 
 private: 
-    f32 m_atmDensity;
+    f32 m_atmDensityFactor;
     u16 m_particleNb;
     Gravity m_gravity;
     Wind m_wind;
@@ -73,7 +73,9 @@ private:
 
     QOpenGLBuffer arrayBuf;
     QOpenGLBuffer indexBuf;
-    static const int MaxParticles = 250;
+
+    static const int MAX_PARTICLES = 250;
+    static const int ATM_DENSITY = 13;
 
     //test buffers
     GLuint billboard_vertex_buffer;
