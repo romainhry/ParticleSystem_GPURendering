@@ -439,17 +439,17 @@ void System::update_particles(s32 pRefresh_delay_s32)
 
     clean_system();
 
-    int nbParticles = m_particleVector.size();
+    int nb_particles = m_particleVector.size();
 
     QVector3D wind = m_wind.getM_translation() * m_wind.getM_factor() ;    
 
-    f32 atmDensity = ATM_DENSITY*m_atmDensityFactor;
+    f32 atm_density = ATM_DENSITY*m_atmDensityFactor;
 
-    for(int i = 0; i < nbParticles;   i++){
+    for(int i = 0; i < nb_particles;   i++){
 
         Particle* part = m_particleVector.at(i);
 
-        QVector3D density = QVector3D(0,-1,0)*(part->getM_density()-atmDensity);
+        QVector3D density = QVector3D(0,-1,0)*(part->getM_density()-atm_density);
 
         qDebug() << density;
 
@@ -464,7 +464,7 @@ void System::update_particles(s32 pRefresh_delay_s32)
 
     }
 
-    int nb_missing_particles =  MAX_PARTICLES-nbParticles;
+    int nb_missing_particles =  MAX_PARTICLES-nb_particles;
     if(nb_missing_particles > 15){
         nb_missing_particles = 15;
     }
