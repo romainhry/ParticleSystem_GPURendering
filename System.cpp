@@ -186,11 +186,11 @@ void System::update_particles(s32 pRefresh_delay_s32)
 
     //Calculations for the screw
     QMatrix4x4 rotation_matrix;
+    rotation_matrix.setToIdentity();
     int rotation_angle = m_wind.getM_angle();
     if( rotation_angle > 0 && rotation_angle < 360){
         rotation_matrix.setToIdentity();
-        rotation_matrix.rotate(rotation_angle * 0.01f, m_wind.getM_translation());
-        qDebug() << rotation_matrix;
+        rotation_matrix.rotate(rotation_angle * m_wind.getM_factor() * 0.01f, m_wind.getM_translation());
     }
 
 
