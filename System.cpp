@@ -57,13 +57,25 @@
 #include <stdlib.h>     /* srand, rand */
 #include <time.h>       /* time */
 #include <iostream>
-
 #include <QDebug>
+#include <random>
+
+#include "enum.h"
+#include "typedef.h"
+#include "Model/Fire.h"
+#include "Model/Smoke.h"
+#include "Model/Water.h"
+#include "Model/Classic.h"
+#include "Model/Wind.h"
+#include "Model/Gravity.h"
 
 static const u8 deltaTime = 1;
 
+
 GLfloat* System::g_particule_position_size_data = new GLfloat[MAX_PARTICLES * 4];
 GLubyte* System::g_particule_color_data         = new GLubyte[MAX_PARTICLES * 4];
+
+Particle_type System::m_particle_type = classical;
 
 
 struct VertexData
@@ -451,8 +463,6 @@ void System::update_particles(s32 pRefresh_delay_s32)
 
         QVector3D density = QVector3D(0,-1,0)*(part->getM_density()-atm_density);
 
-        qDebug() << density;
-
         part->reduce_lifeTime(pRefresh_delay_s32);
 
         // Simulate simple physics : gravity only, no collisions
@@ -465,26 +475,102 @@ void System::update_particles(s32 pRefresh_delay_s32)
     }
 
     int nb_missing_particles =  MAX_PARTICLES-nb_particles;
-    if(nb_missing_particles > 15){
-        nb_missing_particles = 15;
+    if(nb_missing_particles > 700){
+        nb_missing_particles = 700;
     }
+
+    std::random_device rd;
+
+    std::mt19937 e2(rd());
+
+    std::normal_distribution<double> distribution(0.0,2.5);
 
     //TODO make the particle factory outside of this
     for(int i = 0; i < nb_missing_particles; i++){
-        f32 test1 = ((f32)rand()/RAND_MAX)*6-3;
-        f32 test2 = ((f32)rand()/RAND_MAX)*6-3;
-        f32 test3 = ((f32)rand()/RAND_MAX)*6-3;
 
 
-        QVector3D* p; u8 s; u16 l; u8 a; f32 d;
-        p = new QVector3D(test1,test2,test3);          //position
 
-        s = 1;                                      //size
-        l = 5000;                                    //lifeTime
-        a = 1;                                      //alpha
-        d = 0.2;                                      //density
+        Particle* temp;
+        QVector3D* position;
+        QVector3D* color;
+        f32 density;
+        f32 posTemp;
+        u16 lifeTime;
+        u8 size;
+        u8 alpha;
 
-        Smoke* temp = new Smoke(p,s,l,a,d);
+
+
+
+
+
+
+        f32 proba = (f32)rand()/RAND_MAX;
+        u8 limitPos;
+
+        switch (m_particle_type) {
+        case fire:
+
+
+            color = new QVector3D(0.95 + (f32)rand()/RAND_MAX*0.05,
+                                     (f32)rand()/RAND_MAX*0.05,
+                                     0.05 + (f32)rand()/RAND_MAX*0.05);
+            size = 1;
+
+            alpha = 1;
+            density = 0.2+((f32)rand()/RAND_MAX)*0.3; // between 0.1 and 0.3
+
+
+            position = new QVector3D((f32)distribution(e2),
+                                     -6,
+                                     (f32)distribution(e2));
+
+            lifeTime = 1800+((f32)distribution(e2)+3)*180;
+
+            temp = new Fire(position,
+                             size,
+                             lifeTime,
+                             alpha,
+                             density,
+                             color);
+
+            break;
+
+        case smoke:
+
+            color = new QVector3D(((f32)rand()/RAND_MAX)/10.0,
+                                     ((f32)rand()/RAND_MAX)/10.0,
+                                     ((f32)rand()/RAND_MAX)/10.0);
+            size = 1;
+
+            alpha = 1;
+            density = 0.1+((f32)rand()/RAND_MAX)*0.2; // between 0.1 and 0.3
+
+
+            position = new QVector3D((f32)distribution(e2),
+                                     -6,
+                                     (f32)distribution(e2));
+
+            lifeTime = 1800+((f32)distribution(e2)+3)*180; // <> ~1800 & 3200
+
+
+
+            temp = new Smoke(position,
+                             size,
+                             lifeTime,
+                             alpha,
+                             density,
+                             color);
+
+            break;
+        case water:
+            temp = new Water();
+
+            break;
+        default:
+            temp = new Classic();
+            break;
+        }
 
         m_particleVector.push_back(temp);
     }
@@ -504,4 +590,14 @@ void System::clean_system(){
             delete part;
         }
     }
+}
+
+void System::setM_windRotation(u16 value)
+{
+    m_wind.setM_angle(value);
+}
+
+void System::setParticleType(Particle_type pt)
+{
+    m_particle_type = pt;
 }

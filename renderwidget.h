@@ -29,6 +29,8 @@ public:
     void setM_atmDensityFactor(f32 value);
     void setM_gravity(f32);
 
+    void startRendering();
+
 protected:
     void mousePressEvent(QMouseEvent *e) override;
     void mouseReleaseEvent(QMouseEvent *e) override;
@@ -62,6 +64,8 @@ private:
     QQuaternion rotation;
 
     System * m_system;
+
+
 
 };
 

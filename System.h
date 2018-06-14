@@ -14,10 +14,12 @@
 #include "Model/Particle.h"
 #include "Model/Gravity.h"
 #include "Model/Wind.h"
-#include "Model/Smoke.h"
+
+
 #include <QVector>
 
 #include <QOpenGLExtraFunctions>
+#include "enum.h"
 
 #ifndef NBPARTICLEMAX
 #define NBPARTICLEMAX 10
@@ -54,6 +56,10 @@ public:
 
     void update_particles(s32 pRefresh_delay_s32);
 
+    void setParticleType(Particle_type pt);
+
+    void setM_windRotation(u16 value);
+
 
 
 private: 
@@ -74,13 +80,17 @@ private:
     QOpenGLBuffer arrayBuf;
     QOpenGLBuffer indexBuf;
 
-    static const int MAX_PARTICLES = 250;
+    static const int MAX_PARTICLES = 100000;
     static const int ATM_DENSITY = 12;
+
+    static Particle_type m_particle_type;
 
     //test buffers
     GLuint billboard_vertex_buffer;
     GLuint particles_position_buffer;
     GLuint particles_color_buffer;
+
+
 
     static GLfloat* g_particule_position_size_data;
     static GLubyte* g_particule_color_data;

@@ -11,9 +11,8 @@ RenderWidget::RenderWidget(QWidget *parent) :
     angularSpeed(0)
 
 {
-    animationTimer.setSingleShot(false);
-    connect(&animationTimer, SIGNAL(timeout()), this, SLOT(animate()));
-    animationTimer.start(REFRESH_DELAY);
+
+
 }
 
 RenderWidget::~RenderWidget()
@@ -80,7 +79,7 @@ void RenderWidget::initializeGL()
 
     initializeOpenGLFunctions();
 
-    glClearColor(0, 0, 0, 1);
+    glClearColor(1, 1, 1, 1);
 
    // glEnable(GL_CULL_FACE);
 
@@ -167,6 +166,14 @@ void RenderWidget::paintGL()
 System * RenderWidget::getM_system()
 {
     return m_system;
+}
+
+void RenderWidget::startRendering()
+{
+
+    animationTimer.setSingleShot(false);
+    connect(&animationTimer, SIGNAL(timeout()), this, SLOT(animate()));
+    animationTimer.start(REFRESH_DELAY);
 }
 
 void RenderWidget::animate()
