@@ -8,9 +8,10 @@
 #include <QQuaternion>
 #include <QVector2D>
 #include <QBasicTimer>
+#include <QTimer>
 #include <QOpenGLShaderProgram>
 #include <QOpenGLTexture>
-#include "Model/System.h"
+#include "System.h"
 
 
 class RenderWidget : public QOpenGLWidget, protected QOpenGLFunctions
@@ -19,7 +20,17 @@ class RenderWidget : public QOpenGLWidget, protected QOpenGLFunctions
 
 public:
     explicit RenderWidget(QWidget *parent = 0);
+    System * getM_system();
     ~RenderWidget();
+
+
+    void change_wind(QVector3D *);
+    void setM_windFactor(f32);
+    void setM_windRotation(u16);
+    void setM_atmDensityFactor(f32 value);
+    void setM_gravity(f32);
+
+    void startRendering();
 
 protected:
     void mousePressEvent(QMouseEvent *e) override;
@@ -33,8 +44,14 @@ protected:
     void initShaders();
     void initTextures();
 
+private slots:
+    void animate();
+
+
 private:
     QBasicTimer timer;
+
+    QTimer animationTimer;
     QOpenGLShaderProgram program;
 
 
@@ -48,6 +65,9 @@ private:
     QQuaternion rotation;
 
     System * m_system;
+
+
+
 };
 
 #endif // RENDERWIDGET_H

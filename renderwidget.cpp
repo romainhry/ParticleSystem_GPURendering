@@ -1,16 +1,17 @@
 #include "renderwidget.h"
 #include <QMouseEvent>
-#include "Model/System.h"
+#include "System.h"
 #include <math.h>
+
+#define REFRESH_DELAY 25
 
 RenderWidget::RenderWidget(QWidget *parent) :
     QOpenGLWidget(parent),
+    m_system(0),
     angularSpeed(0)
 
 {
-    this->makeCurrent();
-    m_system = new System();
-    m_system->start_system();
+
 
 }
 
@@ -68,9 +69,6 @@ void RenderWidget::timerEvent(QTimerEvent *)
     } else {
         // Update rotation
         rotation = QQuaternion::fromAxisAndAngle(rotationAxis, angularSpeed) * rotation;
-
-        // Request an update
-        update();
     }
 
 }
@@ -81,7 +79,7 @@ void RenderWidget::initializeGL()
 
     initializeOpenGLFunctions();
 
-    glClearColor(0, 0, 0, 1);
+    glClearColor(1, 1, 1, 1);
 
    // glEnable(GL_CULL_FACE);
 
@@ -94,7 +92,7 @@ void RenderWidget::initializeGL()
     glEnable(GL_CULL_FACE);
 
 
-
+    m_system = new System;
     // Use QBasicTimer because its faster than QTimer
     timer.start(12, this);
 
@@ -135,7 +133,7 @@ void RenderWidget::resizeGL(int w, int h)
 
     // Set view matrix
     view.setToIdentity();
-    view.translate({0,-10,-30});
+    view.translate({0,0,-30});
 
     // Reset projection
     projection.setToIdentity();
@@ -163,4 +161,43 @@ void RenderWidget::paintGL()
     //Draw base geometry
     m_system->drawGeometry(&program);
 
+}
+
+System * RenderWidget::getM_system()
+{
+    return m_system;
+}
+
+void RenderWidget::startRendering()
+{
+
+    animationTimer.setSingleShot(false);
+    connect(&animationTimer, SIGNAL(timeout()), this, SLOT(animate()));
+    animationTimer.start(REFRESH_DELAY);
+}
+
+void RenderWidget::animate()
+{
+    m_system->update_particles(REFRESH_DELAY);
+    update();
+}
+
+void RenderWidget::change_wind(QVector3D * vect){
+    m_system->change_wind(vect);
+}
+
+void RenderWidget::setM_windFactor(f32 value){
+    m_system->setM_windFactor(value);
+}
+
+void RenderWidget::setM_windRotation(u16 value){
+    m_system->setM_windRotation(value);
+}
+
+void RenderWidget::setM_atmDensityFactor(f32 value){
+    m_system->setM_atmDensityFactor(value);
+}
+
+void RenderWidget::setM_gravity(f32 value){
+    m_system->setM_gravity(value);
 }

@@ -3,7 +3,8 @@
 
 #include <QMainWindow>
 #include "renderwidget.h"
-#include "Model/System.h"
+#include "System.h"
+#include "enum.h"
 
 namespace Ui {
 class MainWindow;
@@ -36,6 +37,13 @@ private slots:
     void on_slider_wind_strength_ui_valueChanged(int value);
     void on_spinBox_wind_strength_ui_valueChanged(double arg1);
 
+    void on_comboBox_currentIndexChanged(int index);
+
+    void on_pushButton_clicked();
+
+    void on_slider_wind_rotate_ui_valueChanged(int value);
+
+    void on_spinBox_wind_rotate_ui_valueChanged(double arg1);
 
 private:
     Ui::MainWindow *ui;

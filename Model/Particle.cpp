@@ -4,7 +4,7 @@
 
 
 #include "Particle.h"
-#include "typedef.h"
+#include "../typedef.h"
 #include <QOpenGLFunctions>
 #include <QOpenGLShaderProgram>
 #include <QOpenGLBuffer>
@@ -12,12 +12,12 @@
 /**
  * Particle implementation
  */
-Particle::Particle(): m_position(), m_size(),m_lifeTime(),m_alpha(),m_density()
+Particle::Particle(): m_position(), m_size(),m_lifeTime(),m_alpha(),m_density(),m_color()
 {
 
 }
 
-Particle::Particle(QVector3D * p, u8 s, u16 l,u8 a,f32 d): m_position(*p), m_size(s),m_lifeTime(l),m_alpha(a),m_density(d)
+Particle::Particle(QVector3D * p, u8 s, u16 l,u8 a,f32 d, QVector3D * c): m_position(*p), m_size(s),m_lifeTime(l),m_alpha(a),m_density(d), m_color(*c)
 {
 
 }
@@ -108,5 +108,28 @@ void Particle::setM_speed(QVector3D * value)
     m_speed = * value;
 }
 
+void Particle::reduce_lifeTime(u16 time)
+{
+    if(m_lifeTime > time)
+        m_lifeTime -= time;
+    else
+        m_lifeTime = 0;
+}
+
+/**
+ * @return QVector3D
+ */
+QVector3D Particle::getM_color() {
+    return m_color;
+}
+
+/**
+ * @param value
+ */
+void Particle::setM_color(QVector3D * value) {
+
+    m_color = * value;
+
+}
 Particle::~Particle() {
 }

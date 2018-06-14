@@ -6,18 +6,19 @@
 #ifndef _PARTICLE_H
 #define _PARTICLE_H
 
-#include "typedef.h"
+#include "../typedef.h"
 #include <QVector3D>
 #include <QOpenGLFunctions>
 #include <QOpenGLShaderProgram>
 #include <QOpenGLBuffer>
 
 
+
 class Particle {
 public: 
     
     Particle();
-    Particle(QVector3D * p, u8 s, u16 l,u8 a,f32 d);
+    Particle(QVector3D * p, u8 s, u16 l,u8 a,f32 d, QVector3D * c );
     QVector3D getM_position();
 
 
@@ -55,6 +56,13 @@ public:
      */
     void setM_density(f32 value);
 
+    QVector3D getM_color();
+
+    /**
+     * @param value
+     */
+    void setM_color(QVector3D * value);
+
     QVector3D getM_speed();
 
     /**
@@ -62,11 +70,15 @@ public:
      */
     void setM_speed(QVector3D * value);
 
+    virtual void reduce_lifeTime(u16 time);
+
+
 
      ~Particle();
 protected: 
     QVector3D m_position;
     QVector3D m_speed;
+    QVector3D m_color;
     u8 m_size;
     u16 m_lifeTime;
     u8 m_alpha;

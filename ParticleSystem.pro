@@ -4,9 +4,9 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui widgets
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
 
 TARGET = ParticleSystem
 TEMPLATE = app
@@ -30,12 +30,11 @@ SOURCES += main.cpp\
     Model/Gravity.cpp \
     Model/Linear.cpp \
     Model/Particle.cpp \
-    Model/Screw.cpp \
-    Model/Smoke.cpp \
-    Model/System.cpp \
     Model/Water.cpp \
     Model/Wind.cpp \
     renderwidget.cpp \
+    System.cpp \
+    Model/Smoke.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -45,13 +44,13 @@ HEADERS  += mainwindow.h \
     Model/Gravity.h \
     Model/Linear.h \
     Model/Particle.h \
-    Model/Screw.h \
     Model/Smoke.h \
-    Model/System.h \
     Model/Water.h \
     Model/Wind.h \
     typedef.h \
     renderwidget.h \
+    System.h \
+    enum.h
 
 
 FORMS    += mainwindow.ui

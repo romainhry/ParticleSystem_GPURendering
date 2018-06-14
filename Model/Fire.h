@@ -7,7 +7,7 @@
 #define _FIRE_H
 
 #include "Particle.h"
-#include "typedef.h"
+#include "../typedef.h"
 
 
 class Fire: public Particle {
@@ -22,8 +22,8 @@ public:
 
     Fire(QVector3D * p, u8 size, u16 lifeTime,u8 alpha,f32 density, QVector3D * color);
     Fire();
-private: 
-    QVector3D m_color;
+    void reduce_lifeTime(u16 time);
+
 };
 
 #endif //_FIRE_H
