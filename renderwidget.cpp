@@ -190,6 +190,10 @@ void RenderWidget::setM_windFactor(f32 value){
     m_system->setM_windFactor(value);
 }
 
+void RenderWidget::setM_windRotation(u16 value){
+    m_system->setM_windRotation(value);
+}
+
 void RenderWidget::setM_atmDensityFactor(f32 value){
     m_system->setM_atmDensityFactor(value);
 }

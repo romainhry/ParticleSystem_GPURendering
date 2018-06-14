@@ -128,13 +128,15 @@ void MainWindow::on_spinBox_wind_strength_ui_valueChanged(f64 arg1)
 
 void MainWindow::on_slider_wind_rotate_ui_valueChanged(int value)
 {
-    m_system->setM_windRotation(value);
+    //m_system->setM_windRotation(value);
+    m_render.setM_windRotation(value);
     ui->spinBox_wind_rotate_ui->setValue(value);
 }
 
 void MainWindow::on_spinBox_wind_rotate_ui_valueChanged(double arg1)
 {
-    m_system->setM_windRotation((u16)arg1);
+    //m_system->setM_windRotation((u16)arg1);
+    m_render.setM_windRotation((u16)arg1);
     ui->slider_wind_rotate_ui->setValue((int)arg1);
 }
 

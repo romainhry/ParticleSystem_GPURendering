@@ -183,9 +183,23 @@ void System::update_particles(s32 pRefresh_delay_s32)
     QVector3D wind = m_wind.getM_translation() * m_wind.getM_factor() ;    
     f32 atm_density = ATM_DENSITY*m_atmDensityFactor;
 
+
+    //Calculations for the screw
+    QMatrix4x4 rotation_matrix;
+    int rotation_angle = m_wind.getM_angle();
+    if( rotation_angle > 0 && rotation_angle < 360){
+        rotation_matrix.setToIdentity();
+        rotation_matrix.rotate(rotation_angle * 0.01f, m_wind.getM_translation());
+        qDebug() << rotation_matrix;
+    }
+
+
     for(int i = 0; i < nb_particles;   i++){
 
         Particle* part = m_particleVector.at(i);
+
+        QVector3D newPos1 = rotation_matrix * part->getM_position();
+        part->setM_position( &newPos1 );
 
         QVector3D density = QVector3D(0,-1,0)*(part->getM_density()-atm_density);
 
@@ -194,8 +208,8 @@ void System::update_particles(s32 pRefresh_delay_s32)
         // Simulate simple physics : gravity only, no collisions
         QVector3D newSpeed = part->getM_speed() + (wind + m_gravity.getM_gravity() + density) * pRefresh_delay_s32 * 0.000001f;
         part->setM_speed(&newSpeed);
-        QVector3D newPos = (part->getM_position() + part->getM_speed() * pRefresh_delay_s32);
-        part->setM_position(&newPos);
+        QVector3D newPos2 = (part->getM_position() + part->getM_speed() * pRefresh_delay_s32);
+        part->setM_position(&newPos2);
 
 
     }
