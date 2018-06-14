@@ -17,6 +17,6 @@ Fire::Fire():Particle(){}
 void Fire::reduce_lifeTime(u16 time)
 {
     f32 coef = (f32)time/m_lifeTime/7;
-    m_color += QVector3D(-coef,0,coef);
+    m_color += QVector3D(-coef,coef/3,coef);
     Particle::reduce_lifeTime(time);
 }

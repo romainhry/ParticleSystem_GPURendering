@@ -6,6 +6,7 @@
 #ifndef _GRAVITY_H
 #define _GRAVITY_H
 
+#include <QVector3D>
 #include "Force.h"
 #include "../typedef.h"
 
@@ -22,8 +23,6 @@ public:
      * @param value
      */
     void setM_gravity_factor(f32 value);
-
-    QMatrix4x4 get_matrix();
 
     Gravity(f32 factor);
 private: 

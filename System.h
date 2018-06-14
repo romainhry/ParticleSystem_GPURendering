@@ -34,8 +34,7 @@ public:
     void drawGeometry(QOpenGLShaderProgram *program);
 
     void change_wind(QVector3D *);
-    
-    void start_system();
+
     
     float getM_atmDensityFactor();
     
@@ -80,7 +79,7 @@ private:
     QOpenGLBuffer arrayBuf;
     QOpenGLBuffer indexBuf;
 
-    static const int MAX_PARTICLES = 100000;
+    static const int MAX_PARTICLES = 1000; //100 000
     static const int ATM_DENSITY = 12;
 
     static Particle_type m_particle_type;

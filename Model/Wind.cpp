@@ -2,7 +2,7 @@
  * Project Untitled
  */
 
-
+#include <QtMath>
 #include "Wind.h"
 #include "../typedef.h"
 
@@ -53,13 +53,13 @@ void Wind::setM_angle(u16 value) {
 
 }
 
-QMatrix4x4 Wind::get_matrix()
+QMatrix4x4 Wind::get_RotationMatrix()
 {
 
-
-    return QMatrix4x4((f32)cos(m_angle), (f32)0,  (f32)sin(m_angle),   (f32)m_translation.x(),
-                      (f32)0,            (f32)1,  (f32)0,              (f32)m_translation.y(),
-                      (f32)-sin(m_angle),(f32)0,  (f32)cos(m_angle),   (f32)m_translation.z(),
+    f32 angle = qDegreesToRadians((f32)m_angle);
+    return QMatrix4x4((f32)cos(angle), (f32)0,  (f32)sin(angle),    0,
+                      (f32)0,            (f32)1,  (f32)0,               0,
+                      (f32)-sin(angle),(f32)0,  (f32)cos(angle),    0,
                       0,                0,          0,                  1);
 
 }

@@ -6,8 +6,12 @@
 #ifndef _WIND_H
 #define _WIND_H
 
+#include <QMatrix4x4>
+#include <QVector3D>
+
 #include "Force.h"
 #include "typedef.h"
+
 
 
 class Wind: public Force {
@@ -29,7 +33,7 @@ public:
      */
     void setM_factor(f32);
 
-     QMatrix4x4 get_matrix();
+    QMatrix4x4 get_RotationMatrix();
 
      u16 getM_angle();
 

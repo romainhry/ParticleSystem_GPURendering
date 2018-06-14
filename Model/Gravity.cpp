@@ -2,6 +2,7 @@
  * Project Untitled
  */
 
+#include <QVector3D>
 
 #include "Gravity.h"
 
@@ -35,7 +36,3 @@ QVector3D Gravity::getM_gravity()
     return m_gravity;
 }
 
-QMatrix4x4 Gravity::get_matrix()
-{
-
-}
