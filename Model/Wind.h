@@ -33,7 +33,7 @@ public:
      */
     void setM_factor(f32);
 
-    QMatrix4x4 get_RotationMatrix();
+    QMatrix4x4 get_ScrewMatrix();
 
      u16 getM_angle();
 

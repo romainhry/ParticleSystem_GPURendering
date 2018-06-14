@@ -53,13 +53,16 @@ void Wind::setM_angle(u16 value) {
 
 }
 
-QMatrix4x4 Wind::get_RotationMatrix()
+QMatrix4x4 Wind::get_ScrewMatrix()
 {
 
-    f32 angle = qDegreesToRadians((f32)m_angle* 0.1f) ;
-    return QMatrix4x4((f32)cos(angle), (f32)0,  (f32)sin(angle),    0,
-                      (f32)0,            (f32)1,  (f32)0,               0,
-                      (f32)-sin(angle),(f32)0,  (f32)cos(angle),    0,
-                      0,                0,          0,                  1);
+    //Calculations for the screw
+    QMatrix4x4 rotation_matrix;
+    rotation_matrix.setToIdentity();
+    if( m_angle > 0 && m_angle < 360){
+        rotation_matrix.setToIdentity();
+        rotation_matrix.rotate(m_angle * m_factor * 0.01f, m_translation);
+    }
+    return rotation_matrix;
 
 }

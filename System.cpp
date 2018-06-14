@@ -183,12 +183,11 @@ void System::update_particles(s32 pRefresh_delay_s32)
     QVector3D wind = m_wind.getM_translation() * m_wind.getM_factor() ;    
     f32 atm_density = ATM_DENSITY*m_atmDensityFactor;
 
-
     for(int i = 0; i < nb_particles;   i++){
 
         Particle* part = m_particleVector.at(i);
 
-        QVector3D newPos1 = m_wind.get_RotationMatrix() * part->getM_position();
+        QVector3D newPos1 = m_wind.get_ScrewMatrix() * part->getM_position();
         part->setM_position( &newPos1 );
 
         QVector3D density = QVector3D(0,-1,0)*(part->getM_density()-atm_density);
@@ -200,7 +199,6 @@ void System::update_particles(s32 pRefresh_delay_s32)
         part->setM_speed(&newSpeed);
         QVector3D newPos2 = (part->getM_position() + part->getM_speed() * pRefresh_delay_s32);
         part->setM_position(&newPos2);
-
 
     }
 
