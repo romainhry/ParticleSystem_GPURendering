@@ -56,7 +56,7 @@ void Wind::setM_angle(u16 value) {
 QMatrix4x4 Wind::get_RotationMatrix()
 {
 
-    f32 angle = qDegreesToRadians((f32)m_angle);
+    f32 angle = qDegreesToRadians((f32)m_angle* 0.1f) ;
     return QMatrix4x4((f32)cos(angle), (f32)0,  (f32)sin(angle),    0,
                       (f32)0,            (f32)1,  (f32)0,               0,
                       (f32)-sin(angle),(f32)0,  (f32)cos(angle),    0,

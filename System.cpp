@@ -184,21 +184,11 @@ void System::update_particles(s32 pRefresh_delay_s32)
     f32 atm_density = ATM_DENSITY*m_atmDensityFactor;
 
 
-    //Calculations for the screw
-    QMatrix4x4 rotation_matrix;
-    rotation_matrix.setToIdentity();
-    int rotation_angle = m_wind.getM_angle();
-    if( rotation_angle > 0 && rotation_angle < 360){
-        rotation_matrix.setToIdentity();
-        rotation_matrix.rotate(rotation_angle * m_wind.getM_factor() * 0.01f, m_wind.getM_translation());
-    }
-
-
     for(int i = 0; i < nb_particles;   i++){
 
         Particle* part = m_particleVector.at(i);
 
-        QVector3D newPos1 = rotation_matrix * part->getM_position();
+        QVector3D newPos1 = m_wind.get_RotationMatrix() * part->getM_position();
         part->setM_position( &newPos1 );
 
         QVector3D density = QVector3D(0,-1,0)*(part->getM_density()-atm_density);
