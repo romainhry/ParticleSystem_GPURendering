@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1829</width>
-    <height>1044</height>
+    <width>1664</width>
+    <height>979</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -37,11 +37,11 @@
      <rect>
       <x>20</x>
       <y>20</y>
-      <width>1291</width>
-      <height>941</height>
+      <width>1221</width>
+      <height>891</height>
      </rect>
     </property>
-    <layout class="QHBoxLayout" name="horizontalLayout" stretch="">
+    <layout class="QHBoxLayout" name="horizontalLayout">
      <property name="sizeConstraint">
       <enum>QLayout::SetMaximumSize</enum>
      </property>
@@ -50,10 +50,10 @@
    <widget class="QTabWidget" name="tabWidg">
     <property name="geometry">
      <rect>
-      <x>1340</x>
+      <x>1260</x>
       <y>20</y>
-      <width>461</width>
-      <height>941</height>
+      <width>391</width>
+      <height>891</height>
      </rect>
     </property>
     <property name="sizePolicy">
@@ -78,9 +78,9 @@
      <widget class="QWidget" name="verticalLayoutWidget_3">
       <property name="geometry">
        <rect>
-        <x>50</x>
-        <y>120</y>
-        <width>361</width>
+        <x>20</x>
+        <y>160</y>
+        <width>341</width>
         <height>461</height>
        </rect>
       </property>
@@ -178,10 +178,10 @@ p, li { white-space: pre-wrap; }
      <widget class="QWidget" name="verticalLayoutWidget">
       <property name="geometry">
        <rect>
-        <x>60</x>
-        <y>70</y>
-        <width>331</width>
-        <height>761</height>
+        <x>30</x>
+        <y>50</y>
+        <width>321</width>
+        <height>681</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -653,10 +653,10 @@ p, li { white-space: pre-wrap; }
      <widget class="QWidget" name="verticalLayoutWidget_2">
       <property name="geometry">
        <rect>
-        <x>60</x>
-        <y>130</y>
-        <width>331</width>
-        <height>611</height>
+        <x>30</x>
+        <y>100</y>
+        <width>321</width>
+        <height>581</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -880,7 +880,7 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1829</width>
+     <width>1664</width>
      <height>30</height>
     </rect>
    </property>
