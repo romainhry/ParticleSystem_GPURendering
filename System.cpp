@@ -98,7 +98,7 @@ void System::drawGeometry(QOpenGLShaderProgram *program)
     program->enableAttributeArray(colorLocation);
     program->setAttributeBuffer(colorLocation, GL_FLOAT, offset, 3, sizeof(VertexData));
 
-    glPointSize(2.0);
+    //glPointSize(2.0);
     glDrawArrays(GL_POINTS, 0, System::MAX_PARTICLES);
 
 }
@@ -200,8 +200,8 @@ void System::update_particles(s32 pRefresh_delay_s32)
 
     /* Limit the amount of particles created at once */
     int nb_missing_particles =  MAX_PARTICLES-nb_particles;
-    if(nb_missing_particles > 700){
-        nb_missing_particles = 700;
+    if(nb_missing_particles > 400){
+        nb_missing_particles = 400;
     }
 
     /* For gaussian distribution of the position */
