@@ -80,7 +80,7 @@ private:
     QOpenGLBuffer indexBuf;
 
     static const int MAX_PARTICLES = 100000; //100 000
-    static const int ATM_DENSITY = 12;
+    static const int ATM_DENSITY = 13;
 
     static Particle_type m_particle_type;
 
