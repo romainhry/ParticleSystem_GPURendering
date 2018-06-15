@@ -10,6 +10,8 @@ out vec3 fColor;
 //! [0]
 void main()
 {
+    gl_PointSize = 3;
+
     // Calculate vertex final position in screen space
     gl_Position = mvp * vec4( position, 1.0 );
 

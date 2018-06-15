@@ -91,6 +91,8 @@ void RenderWidget::initializeGL()
     // Enable back face culling
     glEnable(GL_CULL_FACE);
 
+    // Enable changing particle size
+    glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
 
     m_system = new System;
     // Use QBasicTimer because its faster than QTimer
