@@ -71,7 +71,7 @@ void System::drawGeometry(QOpenGLShaderProgram *program)
 
 
     int ParticlesCount = m_particleVector.size();
-    VertexData vertices[ParticlesCount];
+    VertexData vertices[MAX_PARTICLES];
     for(int i =0; i < ParticlesCount; i++){
        vertices[i]= {m_particleVector.at(i)->getM_position(),m_particleVector.at(i)->getM_color()};
     }
