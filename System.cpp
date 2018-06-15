@@ -191,7 +191,7 @@ void System::update_particles(s32 pRefresh_delay_s32)
         part->reduce_lifeTime(pRefresh_delay_s32);
 
         // Simulate simple physics : gravity, wind, atm density
-        QVector3D newSpeed = part->getM_speed() + (wind + m_gravity.getM_gravity() + density) * pRefresh_delay_s32 * 0.000001f;
+        QVector3D newSpeed = part->getM_speed()*0.97 + (wind + m_gravity.getM_gravity() + density) * pRefresh_delay_s32 * 0.000001f;
         part->setM_speed(&newSpeed);
         QVector3D newPos2 = (part->getM_position() + part->getM_speed() * pRefresh_delay_s32);
         part->setM_position(&newPos2);
@@ -319,7 +319,7 @@ void System::update_particles(s32 pRefresh_delay_s32)
                                color);
 
             //Vector speed upwards + randomness in X and Z to create a fountain like start
-            speed = QVector3D(  distribution_speed(e2),             //gaussian distribution around 1.5
+            speed = QVector3D(  distribution_speed(e2)*0.5,             //gaussian distribution around 1.5
                                 -0.3+((f32)rand()/RAND_MAX)*0.6,    // between -0.6 & 0.6
                                 -0.3+((f32)rand()/RAND_MAX)*0.6);   // between
             speed *= 0.01f;
