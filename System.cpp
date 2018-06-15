@@ -19,11 +19,6 @@
 #include "Model/Wind.h"
 #include "Model/Gravity.h"
 
-
-
-GLfloat* System::g_particule_position_size_data = new GLfloat[MAX_PARTICLES * 4];
-GLubyte* System::g_particule_color_data         = new GLubyte[MAX_PARTICLES * 4];
-
 Particle_type System::m_particle_type = classical;
 
 
@@ -163,7 +158,6 @@ void System::change_wind(QVector3D * vec) {
 
 
 /**
- * TODO
  * updates all particles taking into account all the forces and the lifetime
  */
 void System::update_particles(s32 pRefresh_delay_s32)
@@ -176,6 +170,7 @@ void System::update_particles(s32 pRefresh_delay_s32)
     u8 size;
     u8 alpha;
 
+    //Removes dead particles
     clean_system();
 
     int nb_particles = m_particleVector.size();
@@ -183,6 +178,7 @@ void System::update_particles(s32 pRefresh_delay_s32)
     QVector3D wind = m_wind.getM_translation() * m_wind.getM_factor() ;    
     f32 atm_density = ATM_DENSITY*m_atmDensityFactor;
 
+    /* update the position of all particles */
     for(int i = 0; i < nb_particles;   i++){
 
         Particle* part = m_particleVector.at(i);
@@ -202,6 +198,7 @@ void System::update_particles(s32 pRefresh_delay_s32)
 
     }
 
+    /* Limit the amount of particles created at once */
     int nb_missing_particles =  MAX_PARTICLES-nb_particles;
     if(nb_missing_particles > 700){
         nb_missing_particles = 700;
@@ -212,12 +209,12 @@ void System::update_particles(s32 pRefresh_delay_s32)
     std::mt19937 e2(rd());
     std::normal_distribution<double> distribution(0.0,2.5);
 
-    /* */
+    /* Gaussian distribution used for initial speed of some particles */
     std::normal_distribution<double> distribution_speed(1.5, 0.3);
 
     QVector3D speed;
 
-    //TODO make the particle factory outside of this
+    //Particle factory, used to create the right kind of particle
     for(int i = 0; i < nb_missing_particles; i++){
 
 
