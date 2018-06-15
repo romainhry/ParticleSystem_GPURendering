@@ -59,8 +59,6 @@ public:
 
     void setM_windRotation(u16 value);
 
-
-
 private: 
     f32 m_atmDensityFactor;
     u16 m_particleNb;
@@ -83,18 +81,6 @@ private:
     static const int ATM_DENSITY = 13;
 
     static Particle_type m_particle_type;
-
-    //test buffers
-    GLuint billboard_vertex_buffer;
-    GLuint particles_position_buffer;
-    GLuint particles_color_buffer;
-
-
-
-    static GLfloat* g_particule_position_size_data;
-    static GLubyte* g_particule_color_data;
-
-
 
     void clean_system();
 };
