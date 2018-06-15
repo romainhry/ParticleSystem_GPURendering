@@ -194,7 +194,7 @@ void System::update_particles(s32 pRefresh_delay_s32)
 
         part->reduce_lifeTime(pRefresh_delay_s32);
 
-        // Simulate simple physics : gravity only, no collisions
+        // Simulate simple physics : gravity, wind, atm density
         QVector3D newSpeed = part->getM_speed() + (wind + m_gravity.getM_gravity() + density) * pRefresh_delay_s32 * 0.000001f;
         part->setM_speed(&newSpeed);
         QVector3D newPos2 = (part->getM_position() + part->getM_speed() * pRefresh_delay_s32);
@@ -213,7 +213,7 @@ void System::update_particles(s32 pRefresh_delay_s32)
     std::normal_distribution<double> distribution(0.0,2.5);
 
     /* */
-    std::normal_distribution<double> distribution_speed(1, 0.2);
+    std::normal_distribution<double> distribution_speed(1.5, 0.3);
 
     QVector3D speed;
 
@@ -224,12 +224,15 @@ void System::update_particles(s32 pRefresh_delay_s32)
         switch (m_particle_type) {
         case fire:
 
-            color = new QVector3D(0.95 + (f32)rand()/RAND_MAX*0.05,
-                                     (f32)rand()/RAND_MAX*0.05,
-                                     0.05 + (f32)rand()/RAND_MAX*0.05);
+
+
             position = new QVector3D((f32)distribution(e2),
                                      -6,
                                      (f32)distribution(e2));
+
+            color = new QVector3D(      1,
+                                     0.95 - (f32)(abs(position->x()) + abs(position->z()))/15  +(f32)rand()/RAND_MAX*0.05,
+                                     0.15 + (f32)rand()/RAND_MAX*0.1);
             size = 1;
             alpha = 1;
             density = 0.2+((f32)rand()/RAND_MAX)*0.3; // between 0.1 and 0.3
@@ -277,7 +280,7 @@ void System::update_particles(s32 pRefresh_delay_s32)
             size = 1;
             alpha = 1;
             density = 15;    //Not lighter than air
-            lifeTime = 1800+((f32)rand()/RAND_MAX)*1400; // <> ~1800 & 3200
+            lifeTime = 2000+((f32)rand()/RAND_MAX)*1600; // <> ~2000 & 3600
 
             temp = new Water(position,
                              size,
