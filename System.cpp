@@ -268,11 +268,12 @@ void System::update_particles(s32 pRefresh_delay_s32)
                              color);
             break;
         case water:
-            //Position de départ fixe
+            //Color for the water more or less blue
             color = new QVector3D( 0.25 + ((f32) rand()/RAND_MAX)/10,
                                    0.52 + ((f32) rand()/RAND_MAX)/10,
                                    0.90 + ((f32) rand()/RAND_MAX)/10);
 
+            //Starting position fixed in Y + randomness in X and Z
             position = new QVector3D( ((f32) rand()/RAND_MAX)/10,
                                       -5,
                                       ((f32) rand()/RAND_MAX)/10);
@@ -288,16 +289,44 @@ void System::update_particles(s32 pRefresh_delay_s32)
                              alpha,
                              density,
                              color);
-            //Vecteur speed vers le haut + petit random
+            //Vector speed upwards + randomness in X and Z to create a fountain like start
             speed = QVector3D(  -0.3+((f32)rand()/RAND_MAX)*0.6,    // between -0.6 & 0.6
-                                distribution_speed(e2), //1,
+                                distribution_speed(e2),             //gaussian distribution around 1.5
                                 -0.3+((f32)rand()/RAND_MAX)*0.6);   // between
             speed *= 0.01f;
             temp->setM_speed(&speed);
 
             break;
         default:
-            temp = new Classic();
+
+            //Color for the water more or less blue
+            color = new QVector3D( 0.66 + ((f32) rand()/RAND_MAX)/10,
+                                   0.47 + ((f32) rand()/RAND_MAX)/10,
+                                   0.05 + ((f32) rand()/RAND_MAX)/10);
+
+            //Starting position fixed in Y + randomness in X and Z
+            position = new QVector3D( -15,
+                                      ((f32) rand()/RAND_MAX)/10,
+                                      ((f32) rand()/RAND_MAX)/10);
+
+            size = 1;
+            alpha = 1;
+            density = 15;    //Not lighter than air
+            lifeTime = 2000+((f32)rand()/RAND_MAX)*1600; // <> ~2000 & 3600
+
+            temp = new Classic(position,
+                               size,
+                               lifeTime,
+                               alpha,
+                               density,
+                               color);
+
+            //Vector speed upwards + randomness in X and Z to create a fountain like start
+            speed = QVector3D(  distribution_speed(e2),             //gaussian distribution around 1.5
+                                -0.3+((f32)rand()/RAND_MAX)*0.6,    // between -0.6 & 0.6
+                                -0.3+((f32)rand()/RAND_MAX)*0.6);   // between
+            speed *= 0.01f;
+            temp->setM_speed(&speed);
             break;
         }
 

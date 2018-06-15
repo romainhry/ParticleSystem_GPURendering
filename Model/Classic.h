@@ -20,6 +20,9 @@ public:
      * @param value
      */
     void setM_color(QVector3D * value);
+
+    void setM_position(QVector3D *value);
+
     Classic(QVector3D * p, u8 s, u16 l,u8 a,f32 d, QVector3D * c);
     Classic();
 private: 
