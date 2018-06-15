@@ -26,7 +26,7 @@ public:
     /**
      * @param value
      */
-    void setM_position(QVector3D  * value);
+    virtual void setM_position(QVector3D  * value);
     
     u8 getM_size();
     

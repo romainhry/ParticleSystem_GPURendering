@@ -13,3 +13,13 @@ Water::Water(QVector3D * p, u8 s, u16 l,u8 a,f32 d, QVector3D *c): Particle(p,s,
 
 Water::Water():Particle(){}
 
+void Water::setM_position(QVector3D  * value)
+{
+    qDebug() << value->y();
+    if ( value->y() < -6 ){
+        m_position = QVector3D(value->x(), -6, value->z());
+    }else{
+        m_position = *value;
+    }
+}
+

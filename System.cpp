@@ -212,6 +212,11 @@ void System::update_particles(s32 pRefresh_delay_s32)
     std::mt19937 e2(rd());
     std::normal_distribution<double> distribution(0.0,2.5);
 
+    /* */
+    std::normal_distribution<double> distribution_speed(1, 0.2);
+
+    QVector3D speed;
+
     //TODO make the particle factory outside of this
     for(int i = 0; i < nb_missing_particles; i++){
 
@@ -260,7 +265,32 @@ void System::update_particles(s32 pRefresh_delay_s32)
                              color);
             break;
         case water:
-            temp = new Water();
+            //Position de départ fixe
+            color = new QVector3D( 0.25 + ((f32) rand()/RAND_MAX)/10,
+                                   0.52 + ((f32) rand()/RAND_MAX)/10,
+                                   0.90 + ((f32) rand()/RAND_MAX)/10);
+
+            position = new QVector3D( ((f32) rand()/RAND_MAX)/10,
+                                      -5,
+                                      ((f32) rand()/RAND_MAX)/10);
+
+            size = 1;
+            alpha = 1;
+            density = 15;    //Not lighter than air
+            lifeTime = 1800+((f32)rand()/RAND_MAX)*1400; // <> ~1800 & 3200
+
+            temp = new Water(position,
+                             size,
+                             lifeTime,
+                             alpha,
+                             density,
+                             color);
+            //Vecteur speed vers le haut + petit random
+            speed = QVector3D(  -0.3+((f32)rand()/RAND_MAX)*0.6,    // between -0.6 & 0.6
+                                distribution_speed(e2), //1,
+                                -0.3+((f32)rand()/RAND_MAX)*0.6);   // between
+            speed *= 0.01f;
+            temp->setM_speed(&speed);
 
             break;
         default:

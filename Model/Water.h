@@ -19,6 +19,12 @@ public:
      * @param value
      */
     void setM_color(QVector3D * value);
+    /**
+     * @brief Special setM_position to not allow the particles to go under the limit
+     * @param value
+     */
+    void setM_position(QVector3D  * value);
+
     Water();
     Water(QVector3D * position, u8 size, u16 lifetime,u8 alpha,f32 density,QVector3D  * color);
 private: 
