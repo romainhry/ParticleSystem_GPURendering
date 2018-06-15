@@ -333,6 +333,9 @@ void System::update_particles(s32 pRefresh_delay_s32)
 }
 
 
+/**
+ * @brief System::clean_system destroys all the particles which have no more lifeTime
+ */
 void System::clean_system(){
 
 
